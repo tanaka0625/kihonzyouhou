@@ -9,6 +9,11 @@ class Word extends Model
 {
     use HasFactory;
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function get_categories() {
         $categories = Word::groupBy('category')->get(['category']);
         for($i=0; $i<count($categories); $i++)
