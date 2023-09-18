@@ -28,14 +28,14 @@
                         </td>
                         <td>{{$words[$i]['word']}}</td>
                         <td>{{$words[$i]['text']}}</td>
-                        <td>{{$words[$i]['category']}}</td>
-                        <td>{{$words[$i]['sub_category']}}</td>
+                        <td>{{$words[$i]->category['category']}}</td>
+                        <td>{{$words[$i]->sub_category['sub_category']}}</td>
                         <td>{{$words[$i]['question_count']}}</td>
                         <td>{{$words[$i]['mistake_count']}}</td>
                     </tr>
                 @endfor
             </table>
         </div>
-
+        <button onclick="location.href='/quiz'">クイズへ</button>
     </div>
 @endsection

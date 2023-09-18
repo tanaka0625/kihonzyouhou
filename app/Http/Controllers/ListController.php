@@ -11,6 +11,7 @@ class ListController extends Controller
 
         // 単語を全て取得
         $words = Word::all();
+        // dd($words[0]->category);
 
         $data = [
             'words' => $words,

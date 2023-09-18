@@ -14,6 +14,11 @@ class Word extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function sub_category()
+    {
+        return $this->belongsTo(SubCategory::class);
+    }    
+
     public function get_categories() {
         $categories = Word::groupBy('category')->get(['category']);
         for($i=0; $i<count($categories); $i++)

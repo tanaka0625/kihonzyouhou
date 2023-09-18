@@ -40,6 +40,9 @@
                 </label>
             </div>
         </div>
+
+        <button onclick="location.href='/list'">単語リストへ</button>
+
     </div>
 
 </template>

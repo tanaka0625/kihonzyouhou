@@ -5161,6 +5161,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -27675,6 +27678,10 @@ var render = function () {
       ],
       2
     ),
+    _vm._v(" "),
+    _c("button", { attrs: { onclick: "location.href='/list'" } }, [
+      _vm._v("単語リストへ"),
+    ]),
   ])
 }
 var staticRenderFns = []
