@@ -5137,6 +5137,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -5157,7 +5159,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      sub_category_ckbox_statuses: this.get_sub_category_ckbox_statuses()
+      sub_category_ckbox_statuses: this.get_sub_category_ckbox_statuses(),
+      category_ckbox_statuses: this.get_category_ckbox_statuses()
     };
   },
   methods: {
@@ -5165,9 +5168,54 @@ __webpack_require__.r(__webpack_exports__);
       for (var i = 0; i < this.sub_categories.length; i++) {
         if (this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === false) {
           this.sub_category_ckbox_statuses[i].status = true;
+          console.log(this.sub_category_ckbox_statuses);
+          for (var x = 0; x < this.categories.length; x++) {
+            console.log(this.categories[x].id);
+            console.log(this.sub_categories[i].category_id);
+            console.log(this.category_ckbox_statuses[x].status);
+            if (this.categories[x].id === this.sub_categories[i].category_id && this.category_ckbox_statuses[x].status === false) {
+              this.category_ckbox_statuses[x].status = true;
+              // console.log(this.categories[x].status);
+              console.log(1);
+            } else if (this.categories[x].id === this.sub_categories[i].category_id && this.category_ckbox_statuses[x].status === true) {
+              console.log(2);
+              break;
+            } else {
+              // console.log(3);
+            }
+          }
           break;
         } else if (this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === true) {
           this.sub_category_ckbox_statuses[i].status = false;
+          console.log(this.sub_category_ckbox_statuses);
+          break;
+        }
+        ;
+      }
+      ;
+    },
+    click_category_btn: function click_category_btn(id) {
+      for (var i = 0; i < this.categories.length; i++) {
+        if (this.categories[i].id === id && this.category_ckbox_statuses[i].status === false) {
+          this.category_ckbox_statuses[i].status = true;
+          console.log(this.category_ckbox_statuses);
+          for (var x = 0; x < this.sub_categories.length; x++) {
+            if (this.category_ckbox_statuses[i].id === this.sub_category_ckbox_statuses[x].category_id) {
+              this.sub_category_ckbox_statuses[x].status = true;
+            }
+          }
+          break;
+        } else if (this.categories[i].id === id && this.category_ckbox_statuses[i].status === true) {
+          this.category_ckbox_statuses[i].status = false;
+          console.log(this.category_ckbox_statuses);
+          for (var _x = 0; _x < this.sub_categories.length; _x++) {
+            if (this.category_ckbox_statuses[i].id === this.sub_category_ckbox_statuses[_x].category_id) {
+              // console.log(this.category_ckbox_statuses[i].id);
+              // console.log(this.sub_category_ckbox_statuses[x].category_id);
+
+              this.sub_category_ckbox_statuses[_x].status = false;
+            }
+          }
           break;
         }
         ;
@@ -5179,6 +5227,17 @@ __webpack_require__.r(__webpack_exports__);
       for (var i = 0; i < this.sub_categories.length; i++) {
         array[i] = {
           id: this.sub_categories[i].id,
+          category_id: this.sub_categories[i].category_id,
+          status: true
+        };
+      }
+      return array;
+    },
+    get_category_ckbox_statuses: function get_category_ckbox_statuses() {
+      var array = {};
+      for (var i = 0; i < this.categories.length; i++) {
+        array[i] = {
+          id: this.categories[i].id,
           status: true
         };
       }
@@ -27371,133 +27430,149 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h3", [_vm._v("大機能")]),
-      _vm._v(" "),
-      _vm._l(_vm.categories, function (category) {
-        return _c("div", { key: category["category"] }, [
-          _c("label", [
-            _vm._v("\n            " + _vm._s(category["category"])),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: category["is_checked"],
-                  expression: "category['is_checked']",
+  return _c("div", [
+    _c(
+      "div",
+      [
+        _c("h3", [_vm._v("大機能")]),
+        _vm._v(" "),
+        _vm._l(_vm.categories, function (category, index) {
+          return _c("div", { key: category.id }, [
+            _c("label", [
+              _vm._v("\n                " + _vm._s(category.category)),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.category_ckbox_statuses[index].status,
+                    expression: "category_ckbox_statuses[index].status",
+                  },
+                ],
+                attrs: { type: "checkbox", name: "category_checkbox" },
+                domProps: {
+                  checked: Array.isArray(
+                    _vm.category_ckbox_statuses[index].status
+                  )
+                    ? _vm._i(_vm.category_ckbox_statuses[index].status, null) >
+                      -1
+                    : _vm.category_ckbox_statuses[index].status,
                 },
-              ],
-              attrs: { type: "checkbox", name: "category_checkbox" },
-              domProps: {
-                checked: Array.isArray(category["is_checked"])
-                  ? _vm._i(category["is_checked"], null) > -1
-                  : category["is_checked"],
-              },
-              on: {
-                change: function ($event) {
-                  var $$a = category["is_checked"],
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 &&
-                        _vm.$set(category, "is_checked", $$a.concat([$$v]))
+                on: {
+                  click: function ($event) {
+                    return _vm.click_category_btn(category.id)
+                  },
+                  change: function ($event) {
+                    var $$a = _vm.category_ckbox_statuses[index].status,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.category_ckbox_statuses[index],
+                            "status",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.category_ckbox_statuses[index],
+                            "status",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
                     } else {
-                      $$i > -1 &&
-                        _vm.$set(
-                          category,
-                          "is_checked",
-                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                        )
+                      _vm.$set(
+                        _vm.category_ckbox_statuses[index],
+                        "status",
+                        $$c
+                      )
                     }
-                  } else {
-                    _vm.$set(category, "is_checked", $$c)
-                  }
+                  },
                 },
-              },
-            }),
-            _vm._v(_vm._s(category["is_checked"]) + "\n        "),
-          ]),
-        ])
-      }),
-      _vm._v(" "),
-      _c("h3", [_vm._v("中機能")]),
-      _vm._v(" "),
-      _vm._l(_vm.sub_categories, function (sub_category, index) {
-        return _c("div", { key: sub_category.id }, [
-          _c("label", [
-            _vm._v("\n            " + _vm._s(sub_category.sub_category)),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.sub_category_ckbox_statuses[index].status,
-                  expression: "sub_category_ckbox_statuses[index].status",
+              }),
+            ]),
+          ])
+        }),
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _c("h3", [_vm._v("中機能")]),
+        _vm._v(" "),
+        _vm._l(_vm.sub_categories, function (sub_category, index) {
+          return _c("div", { key: sub_category.id }, [
+            _c("label", [
+              _vm._v("\n                " + _vm._s(sub_category.sub_category)),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sub_category_ckbox_statuses[index].status,
+                    expression: "sub_category_ckbox_statuses[index].status",
+                  },
+                ],
+                attrs: { type: "checkbox", name: "sub_category_checkbox" },
+                domProps: {
+                  checked: Array.isArray(
+                    _vm.sub_category_ckbox_statuses[index].status
+                  )
+                    ? _vm._i(
+                        _vm.sub_category_ckbox_statuses[index].status,
+                        null
+                      ) > -1
+                    : _vm.sub_category_ckbox_statuses[index].status,
                 },
-              ],
-              attrs: { type: "checkbox", name: "category_checkbox" },
-              domProps: {
-                checked: Array.isArray(
-                  _vm.sub_category_ckbox_statuses[index].status
-                )
-                  ? _vm._i(
-                      _vm.sub_category_ckbox_statuses[index].status,
-                      null
-                    ) > -1
-                  : _vm.sub_category_ckbox_statuses[index].status,
-              },
-              on: {
-                click: function ($event) {
-                  return _vm.click_sub_category_btn(sub_category.id)
-                },
-                change: function ($event) {
-                  var $$a = _vm.sub_category_ckbox_statuses[index].status,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 &&
-                        _vm.$set(
-                          _vm.sub_category_ckbox_statuses[index],
-                          "status",
-                          $$a.concat([$$v])
-                        )
+                on: {
+                  click: function ($event) {
+                    return _vm.click_sub_category_btn(sub_category.id)
+                  },
+                  change: function ($event) {
+                    var $$a = _vm.sub_category_ckbox_statuses[index].status,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.sub_category_ckbox_statuses[index],
+                            "status",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.sub_category_ckbox_statuses[index],
+                            "status",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
                     } else {
-                      $$i > -1 &&
-                        _vm.$set(
-                          _vm.sub_category_ckbox_statuses[index],
-                          "status",
-                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                        )
+                      _vm.$set(
+                        _vm.sub_category_ckbox_statuses[index],
+                        "status",
+                        $$c
+                      )
                     }
-                  } else {
-                    _vm.$set(
-                      _vm.sub_category_ckbox_statuses[index],
-                      "status",
-                      $$c
-                    )
-                  }
+                  },
                 },
-              },
-            }),
-            _vm._v(
-              "\n            " +
-                _vm._s(_vm.sub_categories[index]["is_checked"]) +
-                "\n        "
-            ),
-          ]),
-        ])
-      }),
-    ],
-    2
-  )
+              }),
+            ]),
+          ])
+        }),
+      ],
+      2
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
