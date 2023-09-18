@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ListController;
+use App\Http\Controllers\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/list', [App\Http\Controllers\ListController::class, 'index']);
+Route::post('/list', [App\Http\Controllers\ListController::class, 'post']);
+Route::get('/quiz', [App\Http\Controllers\QuizController::class, 'index']);
+
