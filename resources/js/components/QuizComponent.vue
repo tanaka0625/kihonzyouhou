@@ -1,5 +1,27 @@
 <template>
     <div>
+
+        <div>
+            <div id="word">
+                <h2>
+                    {{ word }}
+                </h2>
+            </div>
+
+            <div id="text" v-show="is_visible_text">
+                {{ text }}
+            </div>
+            <div>
+                <button class="btn btn-primary" v-on:click="ask()">
+                    出題
+                </button>
+                <button class="btn btn-primary" v-on:click="see_text()">
+                    解説
+                </button>
+            </div>
+        </div>
+
+
         <div>
             <h3>大機能</h3>
             <div v-for="(category, index) in categories" :key="category.id">
@@ -41,15 +63,20 @@
             item: {
                 type: Array
             },
-            num: {
+            words: {
+                type: Array,
                 requires: true
             }
+
         },
         data() {
             return {
                 sub_category_ckbox_statuses: this.get_sub_category_ckbox_statuses(),
                 category_ckbox_statuses: this.get_category_ckbox_statuses(),
-
+                // word: this.ask()
+                word: "単語",
+                text: "解説",
+                is_visible_text: true
             };
         },
         methods: {
@@ -151,6 +178,38 @@
                 }
                     
                 return array;
+            },
+            ask: function () {
+                console.log(1);
+                let cnt=0;
+                let array = {};
+ 
+                for(let i=0; i<Object.keys(this.sub_category_ckbox_statuses).length; i++)
+                {
+                    console.log(2);
+                    if(this.sub_category_ckbox_statuses[i].status === true)
+                    {
+                        for(let x=0; x<this.words.length; x++)
+                        {
+                            if(this.sub_category_ckbox_statuses[i].id === this.words[x].sub_category_id)
+                            {
+                                
+                                array[cnt] = this.words[x];
+                                cnt++;
+                            }
+                        }
+                        
+                    }
+                }
+
+                let randnum = Math.floor( Math.random() * cnt);
+                console.log(array[randnum]);
+                this.word = array[randnum].word;
+                this.text = array[randnum].text;
+                this.is_visible_text = false;
+            },
+            see_text: function () {
+                this.is_visible_text = true;
             }
         }
     }

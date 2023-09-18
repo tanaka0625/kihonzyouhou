@@ -5139,6 +5139,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -5153,14 +5175,19 @@ __webpack_require__.r(__webpack_exports__);
     item: {
       type: Array
     },
-    num: {
+    words: {
+      type: Array,
       requires: true
     }
   },
   data: function data() {
     return {
       sub_category_ckbox_statuses: this.get_sub_category_ckbox_statuses(),
-      category_ckbox_statuses: this.get_category_ckbox_statuses()
+      category_ckbox_statuses: this.get_category_ckbox_statuses(),
+      // word: this.ask()
+      word: "単語",
+      text: "解説",
+      is_visible_text: true
     };
   },
   methods: {
@@ -5242,6 +5269,30 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
       return array;
+    },
+    ask: function ask() {
+      console.log(1);
+      var cnt = 0;
+      var array = {};
+      for (var i = 0; i < Object.keys(this.sub_category_ckbox_statuses).length; i++) {
+        console.log(2);
+        if (this.sub_category_ckbox_statuses[i].status === true) {
+          for (var x = 0; x < this.words.length; x++) {
+            if (this.sub_category_ckbox_statuses[i].id === this.words[x].sub_category_id) {
+              array[cnt] = this.words[x];
+              cnt++;
+            }
+          }
+        }
+      }
+      var randnum = Math.floor(Math.random() * cnt);
+      console.log(array[randnum]);
+      this.word = array[randnum].word;
+      this.text = array[randnum].text;
+      this.is_visible_text = false;
+    },
+    see_text: function see_text() {
+      this.is_visible_text = true;
     }
   }
 });
@@ -27431,6 +27482,58 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", [
+      _c("div", { attrs: { id: "word" } }, [
+        _c("h2", [
+          _vm._v("\n                " + _vm._s(_vm.word) + "\n            "),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.is_visible_text,
+              expression: "is_visible_text",
+            },
+          ],
+          attrs: { id: "text" },
+        },
+        [_vm._v("\n            " + _vm._s(_vm.text) + "\n        ")]
+      ),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            on: {
+              click: function ($event) {
+                return _vm.ask()
+              },
+            },
+          },
+          [_vm._v("\n                出題\n            ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            on: {
+              click: function ($event) {
+                return _vm.see_text()
+              },
+            },
+          },
+          [_vm._v("\n                解説\n            ")]
+        ),
+      ]),
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       [
