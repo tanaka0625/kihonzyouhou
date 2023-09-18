@@ -16,7 +16,7 @@ class SubCategory extends Model
 
     public function get_sub_categories_with_is_checked()
     {
-        $sub_categories = SubCategory::all();
+        $sub_categories = SubCategory::get();
         for($i=0; $i<count($sub_categories); $i++)
         {
             $sub_categories[$i]["is_checked"] = true;

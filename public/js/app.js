@@ -5136,6 +5136,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -5149,11 +5150,41 @@ __webpack_require__.r(__webpack_exports__);
     },
     item: {
       type: Array
+    },
+    num: {
+      requires: true
+    }
+  },
+  data: function data() {
+    return {
+      sub_category_ckbox_statuses: this.get_sub_category_ckbox_statuses()
+    };
+  },
+  methods: {
+    click_sub_category_btn: function click_sub_category_btn(id) {
+      for (var i = 0; i < this.sub_categories.length; i++) {
+        if (this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === false) {
+          this.sub_category_ckbox_statuses[i].status = true;
+          break;
+        } else if (this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === true) {
+          this.sub_category_ckbox_statuses[i].status = false;
+          break;
+        }
+        ;
+      }
+      ;
+    },
+    get_sub_category_ckbox_statuses: function get_sub_category_ckbox_statuses() {
+      var array = {};
+      for (var i = 0; i < this.sub_categories.length; i++) {
+        array[i] = {
+          id: this.sub_categories[i].id,
+          status: true
+        };
+      }
+      return array;
     }
   }
-  // data: function() {
-
-  // }
 });
 
 /***/ }),
@@ -27396,28 +27427,36 @@ var render = function () {
       _vm._v(" "),
       _c("h3", [_vm._v("中機能")]),
       _vm._v(" "),
-      _vm._l(_vm.sub_categories, function (sub_category) {
-        return _c("div", { key: sub_category["sub_category"] }, [
+      _vm._l(_vm.sub_categories, function (sub_category, index) {
+        return _c("div", { key: sub_category.id }, [
           _c("label", [
-            _vm._v("\n            " + _vm._s(sub_category["sub_category"])),
+            _vm._v("\n            " + _vm._s(sub_category.sub_category)),
             _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: sub_category["is_checked"],
-                  expression: "sub_category['is_checked']",
+                  value: _vm.sub_category_ckbox_statuses[index].status,
+                  expression: "sub_category_ckbox_statuses[index].status",
                 },
               ],
               attrs: { type: "checkbox", name: "category_checkbox" },
               domProps: {
-                checked: Array.isArray(sub_category["is_checked"])
-                  ? _vm._i(sub_category["is_checked"], null) > -1
-                  : sub_category["is_checked"],
+                checked: Array.isArray(
+                  _vm.sub_category_ckbox_statuses[index].status
+                )
+                  ? _vm._i(
+                      _vm.sub_category_ckbox_statuses[index].status,
+                      null
+                    ) > -1
+                  : _vm.sub_category_ckbox_statuses[index].status,
               },
               on: {
+                click: function ($event) {
+                  return _vm.click_sub_category_btn(sub_category.id)
+                },
                 change: function ($event) {
-                  var $$a = sub_category["is_checked"],
+                  var $$a = _vm.sub_category_ckbox_statuses[index].status,
                     $$el = $event.target,
                     $$c = $$el.checked ? true : false
                   if (Array.isArray($$a)) {
@@ -27425,21 +27464,34 @@ var render = function () {
                       $$i = _vm._i($$a, $$v)
                     if ($$el.checked) {
                       $$i < 0 &&
-                        _vm.$set(sub_category, "is_checked", $$a.concat([$$v]))
+                        _vm.$set(
+                          _vm.sub_category_ckbox_statuses[index],
+                          "status",
+                          $$a.concat([$$v])
+                        )
                     } else {
                       $$i > -1 &&
                         _vm.$set(
-                          sub_category,
-                          "is_checked",
+                          _vm.sub_category_ckbox_statuses[index],
+                          "status",
                           $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                         )
                     }
                   } else {
-                    _vm.$set(sub_category, "is_checked", $$c)
+                    _vm.$set(
+                      _vm.sub_category_ckbox_statuses[index],
+                      "status",
+                      $$c
+                    )
                   }
                 },
               },
             }),
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.sub_categories[index]["is_checked"]) +
+                "\n        "
+            ),
           ]),
         ])
       }),

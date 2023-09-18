@@ -21,7 +21,7 @@ class Category extends Model
 
     public function get_categories_with_is_checked()
     {
-        $categories = Category::all();
+        $categories = Category::get();
         for($i=0; $i<count($categories); $i++)
         {
             $categories[$i]["is_checked"] = true;

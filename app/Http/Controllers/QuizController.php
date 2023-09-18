@@ -15,6 +15,7 @@ class QuizController extends Controller
         $categories = Category::get_categories_with_is_checked();
         $sub_categories = SubCategory::get_sub_categories_with_is_checked();
 
+    //    dd($sub_categories);
 
         $data = [
             'words' => $words,
