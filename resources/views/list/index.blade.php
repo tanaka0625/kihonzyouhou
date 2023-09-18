@@ -13,7 +13,7 @@
                 <input type="text" name="category" id="form_category"><br>
                 <label for="form_sub_category">中分類</label>
                 <input type="text" name="sub_category" id="form_sub_category"><br>
-                <input type="submit" value="送信">
+                <input type="submit" value="送信" class="btn btn-dark">
             </form>
         </div>
 
