@@ -27679,7 +27679,7 @@ var render = function () {
       2
     ),
     _vm._v(" "),
-    _c("button", { attrs: { onclick: "location.href='/list'" } }, [
+    _c("button", { attrs: { onclick: "location.href='/'" } }, [
       _vm._v("単語リストへ"),
     ]),
   ])
