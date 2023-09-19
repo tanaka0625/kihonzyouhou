@@ -12,10 +12,8 @@ class QuizController extends Controller
     public function index(Request $request) {
         $words = Word::all();
 
-        $categories = Category::get_categories_with_is_checked();
-        $sub_categories = SubCategory::get_sub_categories_with_is_checked();
-
-    //    dd($sub_categories);
+        $categories = Category::all();
+        $sub_categories = SubCategory::all();
 
         $data = [
             'words' => $words,
