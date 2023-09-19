@@ -19,14 +19,4 @@ class Category extends Model
         return $this->hasMany(subCategory::class);
     }
 
-    public function get_categories_with_is_checked()
-    {
-        $categories = Category::get();
-        for($i=0; $i<count($categories); $i++)
-        {
-            $categories[$i]["is_checked"] = true;
-        }
-
-        return $categories;
-    }
 }
