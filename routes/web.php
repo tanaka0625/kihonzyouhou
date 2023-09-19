@@ -15,13 +15,9 @@ use App\Http\Controllers\QuizController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/list', [App\Http\Controllers\ListController::class, 'index']);
-Route::post('/list', [App\Http\Controllers\ListController::class, 'post']);
+Route::get('/', [App\Http\Controllers\ListController::class, 'index']);
+Route::post('/', [App\Http\Controllers\ListController::class, 'post']);
 Route::get('/quiz', [App\Http\Controllers\QuizController::class, 'index']);
 
