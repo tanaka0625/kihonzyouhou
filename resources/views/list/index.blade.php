@@ -2,6 +2,8 @@
 
 @section('content')
     <div>
+        <button onclick="location.href='/quiz'" class="btn btn-dark">クイズへ</button>
+
         <div>
             <form action="/list" method="post">
                 @csrf
@@ -24,7 +26,7 @@
                     <tr>
                         <td>
                             {{$words[$i]['id']}}
-                            <button class="btn btn-primary">編集</button>
+                            <button class="btn btn-primary" onclick="location.href='/edit/{{$words[$i]['id']}}'">編集</button>
                         </td>
                         <td>{{$words[$i]['word']}}</td>
                         <td>{{$words[$i]['text']}}</td>
@@ -36,6 +38,5 @@
                 @endfor
             </table>
         </div>
-        <button onclick="location.href='/quiz'">クイズへ</button>
     </div>
 @endsection

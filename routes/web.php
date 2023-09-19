@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\EditController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,11 @@ use App\Http\Controllers\QuizController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/list', [App\Http\Controllers\ListController::class, 'index']);
-Route::post('/list', [App\Http\Controllers\ListController::class, 'post']);
+Route::get('/', [App\Http\Controllers\ListController::class, 'index']);
+Route::post('/', [App\Http\Controllers\ListController::class, 'post']);
 Route::get('/quiz', [App\Http\Controllers\QuizController::class, 'index']);
+Route::get('/edit/{word_id}', [App\Http\Controllers\EditController::class, 'index']);
+Route::post('/edit/{word_id}', [App\Http\Controllers\EditController::class, 'edit']);
 

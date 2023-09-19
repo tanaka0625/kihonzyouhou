@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <button onclick="location.href='/list'">単語リストへ</button>
+        <button onclick="location.href='/'">単語リストへ</button>
 
     </div>
 
