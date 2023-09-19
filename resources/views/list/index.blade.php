@@ -2,6 +2,8 @@
 
 @section('content')
     <div>
+        <button onclick="location.href='/quiz'" class="btn btn-dark">クイズへ</button>
+
         <div>
             <form action="/list" method="post">
                 @csrf
@@ -36,6 +38,5 @@
                 @endfor
             </table>
         </div>
-        <button onclick="location.href='/quiz'">クイズへ</button>
     </div>
 @endsection
