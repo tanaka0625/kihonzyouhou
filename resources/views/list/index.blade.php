@@ -5,7 +5,7 @@
         <button onclick="location.href='/quiz'" class="btn btn-dark">クイズへ</button>
 
         <div>
-            <form action="/list" method="post">
+            <form action="/post/word" method="post">
                 @csrf
                 <label for="text">単語</label>
                 <input type="text" name="word" id="form_word"><br>
@@ -18,6 +18,9 @@
                 <input type="submit" value="送信" class="btn btn-dark">
             </form>
         </div>
+
+        <form-category-component></form-category-component>
+        <form-sub-category-component :categories="{{Js::from($categories)}}"></form-sub-category-component>
 
         <div>
             <table class="table table-bordered">
