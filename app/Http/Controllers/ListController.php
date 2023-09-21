@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Word;
+use App\Models\Category;
 
 class ListController extends Controller
 {
@@ -11,9 +12,11 @@ class ListController extends Controller
 
         // 単語を全て取得
         $words = Word::all();
+        $categories = Category::all();
 
         $data = [
             'words' => $words,
+            'categories' => $categories,
             'count' => count($words)
         ];
     
