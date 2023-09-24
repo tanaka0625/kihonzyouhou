@@ -5124,17 +5124,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      test: true,
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      is_visible_form_category: false
     };
   },
   methods: {
-    test: function test() {
-      return true;
+    show_form_category: function show_form_category() {
+      if (this.is_visible_form_category) {
+        this.is_visible_form_category = false;
+      } else {
+        this.is_visible_form_category = true;
+      }
     }
   }
 });
@@ -5170,6 +5175,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -5180,13 +5186,91 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      test: true,
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      is_visible_form_sub_category: false
     };
   },
   methods: {
-    test: function test() {
-      return true;
+    show_form_sub_category: function show_form_sub_category() {
+      if (this.is_visible_form_sub_category) {
+        this.is_visible_form_sub_category = false;
+      } else {
+        this.is_visible_form_sub_category = true;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FormWordComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FormWordComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    categories: {
+      type: Array,
+      requires: true
+    },
+    sub_categories: {
+      type: Array,
+      requires: true
+    },
+    item: {
+      type: Array
+    }
+  },
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      is_visible_form_word: false
+    };
+  },
+  methods: {
+    show_form_word: function show_form_word() {
+      if (this.is_visible_form_word === false) {
+        this.is_visible_form_word = true;
+      } else {
+        this.is_visible_form_word = false;
+      }
     }
   }
 });
@@ -5204,6 +5288,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -5283,7 +5369,8 @@ __webpack_require__.r(__webpack_exports__);
       // word: this.ask()
       word: "単語",
       text: "解説",
-      is_visible_text: true
+      is_visible_text: true,
+      is_visible_quiz: false
     };
   },
   methods: {
@@ -5389,6 +5476,102 @@ __webpack_require__.r(__webpack_exports__);
     },
     see_text: function see_text() {
       this.is_visible_text = true;
+    },
+    show_quiz: function show_quiz() {
+      if (this.is_visible_quiz) {
+        this.is_visible_quiz = false;
+      } else {
+        this.is_visible_quiz = true;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WordTableComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WordTableComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    words: {
+      type: Array,
+      required: true
+    },
+    categories: {
+      type: Array,
+      required: true
+    },
+    sub_categories: {
+      type: Array,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    };
+  },
+  methods: {
+    find_category: function find_category(category_id) {
+      var result = this.categories.find(function (category) {
+        return category.id == category_id;
+      });
+      console.log(result);
+      return result;
+    },
+    find_sub_category: function find_sub_category(sub_category_id) {
+      var result = this.sub_categories.find(function (sub_category) {
+        return sub_category.id == sub_category_id;
+      });
+      console.log(result);
+      return result;
+    },
+    To_edit_page: function To_edit_page(word_id) {
+      // window.location.href('edit/'.word_id);
+      this.$router.push('edit/');
+    },
+    edit_href: function edit_href(id) {
+      var url = "location.href='/edit/" + id + "'";
+      return url;
     }
   }
 });
@@ -5425,6 +5608,8 @@ Vue.component('example-component', (__webpack_require__(/*! ./components/Example
 Vue.component('quiz-component', (__webpack_require__(/*! ./components/QuizComponent.vue */ "./resources/js/components/QuizComponent.vue")["default"]));
 Vue.component('form-category-component', (__webpack_require__(/*! ./components/FormCategoryComponent.vue */ "./resources/js/components/FormCategoryComponent.vue")["default"]));
 Vue.component('form-sub-category-component', (__webpack_require__(/*! ./components/FormSubCategoryComponent.vue */ "./resources/js/components/FormSubCategoryComponent.vue")["default"]));
+Vue.component('form-word-component', (__webpack_require__(/*! ./components/FormWordComponent.vue */ "./resources/js/components/FormWordComponent.vue")["default"]));
+Vue.component('word-table-component', (__webpack_require__(/*! ./components/WordTableComponent.vue */ "./resources/js/components/WordTableComponent.vue")["default"]));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27488,6 +27673,45 @@ component.options.__file = "resources/js/components/FormSubCategoryComponent.vue
 
 /***/ }),
 
+/***/ "./resources/js/components/FormWordComponent.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/FormWordComponent.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FormWordComponent_vue_vue_type_template_id_a972bf58___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormWordComponent.vue?vue&type=template&id=a972bf58& */ "./resources/js/components/FormWordComponent.vue?vue&type=template&id=a972bf58&");
+/* harmony import */ var _FormWordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormWordComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/FormWordComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FormWordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FormWordComponent_vue_vue_type_template_id_a972bf58___WEBPACK_IMPORTED_MODULE_0__.render,
+  _FormWordComponent_vue_vue_type_template_id_a972bf58___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FormWordComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/QuizComponent.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/QuizComponent.vue ***!
@@ -27523,6 +27747,51 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/QuizComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/WordTableComponent.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/WordTableComponent.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _WordTableComponent_vue_vue_type_template_id_0eb0e7a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WordTableComponent.vue?vue&type=template&id=0eb0e7a4& */ "./resources/js/components/WordTableComponent.vue?vue&type=template&id=0eb0e7a4&");
+/* harmony import */ var _WordTableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WordTableComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/WordTableComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _WordTableComponent_vue_vue_type_custom_index_0_blockType_div__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./WordTableComponent.vue?vue&type=custom&index=0&blockType=div */ "./resources/js/components/WordTableComponent.vue?vue&type=custom&index=0&blockType=div");
+/* harmony import */ var _WordTableComponent_vue_vue_type_custom_index_0_blockType_div__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_WordTableComponent_vue_vue_type_custom_index_0_blockType_div__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _WordTableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _WordTableComponent_vue_vue_type_template_id_0eb0e7a4___WEBPACK_IMPORTED_MODULE_0__.render,
+  _WordTableComponent_vue_vue_type_template_id_0eb0e7a4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* custom blocks */
+;
+if (typeof (_WordTableComponent_vue_vue_type_custom_index_0_blockType_div__WEBPACK_IMPORTED_MODULE_3___default()) === 'function') _WordTableComponent_vue_vue_type_custom_index_0_blockType_div__WEBPACK_IMPORTED_MODULE_3___default()(component)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/WordTableComponent.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -27575,6 +27844,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FormWordComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/FormWordComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormWordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormWordComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FormWordComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormWordComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/QuizComponent.vue?vue&type=script&lang=js&":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/QuizComponent.vue?vue&type=script&lang=js& ***!
@@ -27588,6 +27873,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuizComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./QuizComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/QuizComponent.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuizComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/WordTableComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/WordTableComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WordTableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./WordTableComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WordTableComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WordTableComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -27642,6 +27943,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FormWordComponent.vue?vue&type=template&id=a972bf58&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/FormWordComponent.vue?vue&type=template&id=a972bf58& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormWordComponent_vue_vue_type_template_id_a972bf58___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormWordComponent_vue_vue_type_template_id_a972bf58___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormWordComponent_vue_vue_type_template_id_a972bf58___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormWordComponent.vue?vue&type=template&id=a972bf58& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FormWordComponent.vue?vue&type=template&id=a972bf58&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/QuizComponent.vue?vue&type=template&id=91549c66&":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/QuizComponent.vue?vue&type=template&id=91549c66& ***!
@@ -27655,6 +27973,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuizComponent_vue_vue_type_template_id_91549c66___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuizComponent_vue_vue_type_template_id_91549c66___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./QuizComponent.vue?vue&type=template&id=91549c66& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/QuizComponent.vue?vue&type=template&id=91549c66&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/WordTableComponent.vue?vue&type=custom&index=0&blockType=div":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/WordTableComponent.vue?vue&type=custom&index=0&blockType=div ***!
+  \**********************************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/WordTableComponent.vue?vue&type=template&id=0eb0e7a4&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/WordTableComponent.vue?vue&type=template&id=0eb0e7a4& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WordTableComponent_vue_vue_type_template_id_0eb0e7a4___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WordTableComponent_vue_vue_type_template_id_0eb0e7a4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WordTableComponent_vue_vue_type_template_id_0eb0e7a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./WordTableComponent.vue?vue&type=template&id=0eb0e7a4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WordTableComponent.vue?vue&type=template&id=0eb0e7a4&");
 
 
 /***/ }),
@@ -27724,25 +28069,40 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [
-      _c("form", { attrs: { action: "/post/category", method: "post" } }, [
-        _c("label", { attrs: { for: "category" } }, [_vm._v("大項目")]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "text", name: "category", id: "category" },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "btn btn-dark",
-          attrs: { type: "submit", value: "送信" },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrf },
-        }),
-      ]),
-    ]),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-dark",
+        on: {
+          click: function ($event) {
+            return _vm.show_form_category()
+          },
+        },
+      },
+      [_vm._v("大項目追加")]
+    ),
+    _vm._v(" "),
+    _vm.is_visible_form_category
+      ? _c("div", [
+          _c("form", { attrs: { action: "/post/category", method: "post" } }, [
+            _c("label", { attrs: { for: "category" } }, [_vm._v("大項目")]),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "text", name: "category", id: "category" },
+            }),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "btn btn-dark",
+              attrs: { type: "submit", value: "送信" },
+            }),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "hidden", name: "_token" },
+              domProps: { value: _vm.csrf },
+            }),
+          ]),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -27769,40 +28129,174 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [
-      _c("form", { attrs: { action: "/post/sub_category", method: "post" } }, [
-        _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-dark",
+        on: {
+          click: function ($event) {
+            return _vm.show_form_sub_category()
+          },
+        },
+      },
+      [_vm._v("中項目追加")]
+    ),
+    _vm._v(" "),
+    _vm.is_visible_form_sub_category
+      ? _c("div", [
           _c(
-            "select",
-            { attrs: { name: "category_id" } },
-            _vm._l(_vm.categories, function (category) {
-              return _c(
-                "option",
-                { key: category.id, domProps: { value: category.id } },
-                [_vm._v(_vm._s(category.category))]
-              )
-            }),
-            0
+            "form",
+            { attrs: { action: "/post/sub_category", method: "post" } },
+            [
+              _c("div", [
+                _c(
+                  "select",
+                  { attrs: { name: "category_id" } },
+                  _vm._l(_vm.categories, function (category) {
+                    return _c(
+                      "option",
+                      { key: category.id, domProps: { value: category.id } },
+                      [_vm._v(_vm._s(category.category))]
+                    )
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "sub_category" } }, [
+                _vm._v("中項目"),
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "text",
+                  name: "sub_category",
+                  id: "sub_category",
+                },
+              }),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "btn btn-dark",
+                attrs: { type: "submit", value: "送信" },
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf },
+              }),
+            ]
           ),
-        ]),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "sub_category" } }, [_vm._v("中項目")]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "text", name: "sub_category", id: "sub_category" },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "btn btn-dark",
-          attrs: { type: "submit", value: "送信" },
-        }),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrf },
-        }),
-      ]),
-    ]),
+        ])
+      : _vm._e(),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FormWordComponent.vue?vue&type=template&id=a972bf58&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FormWordComponent.vue?vue&type=template&id=a972bf58& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-dark",
+        on: {
+          click: function ($event) {
+            return _vm.show_form_word()
+          },
+        },
+      },
+      [_vm._v("単語追加")]
+    ),
+    _vm._v(" "),
+    _vm.is_visible_form_word
+      ? _c("div", [
+          _c("form", { attrs: { action: "/post/word", method: "post" } }, [
+            _c("label", { attrs: { for: "text" } }, [_vm._v("単語")]),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "text", name: "word", id: "form_word" },
+            }),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "form_text" } }, [_vm._v("解説")]),
+            _vm._v(" "),
+            _c("textarea", {
+              attrs: { name: "text", id: "form_text", cols: "30", rows: "10" },
+            }),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", [
+              _c("label", { attrs: { for: "form_category" } }, [
+                _vm._v("大分類"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                { attrs: { name: "category_id", id: "form_category" } },
+                _vm._l(_vm.categories, function (category) {
+                  return _c(
+                    "option",
+                    { key: category.id, domProps: { value: category.id } },
+                    [_vm._v(_vm._s(category.category))]
+                  )
+                }),
+                0
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("label", { attrs: { for: "form_sub_category" } }, [
+                _vm._v("中分類"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                { attrs: { name: "sub_category_id", id: "form_sub_category" } },
+                _vm._l(_vm.sub_categories, function (sub_category) {
+                  return _c(
+                    "option",
+                    {
+                      key: sub_category.id,
+                      domProps: { value: sub_category.id },
+                    },
+                    [_vm._v(_vm._s(sub_category.sub_category))]
+                  )
+                }),
+                0
+              ),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "btn btn-dark",
+              attrs: { type: "submit", value: "送信" },
+            }),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "hidden", name: "_token" },
+              domProps: { value: _vm.csrf },
+            }),
+          ]),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -27829,206 +28323,324 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [
-      _c("div", { attrs: { id: "word" } }, [
-        _c("h2", [
-          _vm._v("\n                " + _vm._s(_vm.word) + "\n            "),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.is_visible_text,
-              expression: "is_visible_text",
-            },
-          ],
-          attrs: { id: "text" },
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-dark",
+        on: {
+          click: function ($event) {
+            return _vm.show_quiz()
+          },
         },
-        [_vm._v("\n            " + _vm._s(_vm.text) + "\n        ")]
-      ),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function ($event) {
-                return _vm.ask()
-              },
-            },
-          },
-          [_vm._v("\n                出題\n            ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function ($event) {
-                return _vm.see_text()
-              },
-            },
-          },
-          [_vm._v("\n                解説\n            ")]
-        ),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      [
-        _c("h3", [_vm._v("大機能")]),
-        _vm._v(" "),
-        _vm._l(_vm.categories, function (category, index) {
-          return _c("div", { key: category.id }, [
-            _c("label", [
-              _vm._v("\n                " + _vm._s(category.category)),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.category_ckbox_statuses[index].status,
-                    expression: "category_ckbox_statuses[index].status",
-                  },
-                ],
-                attrs: { type: "checkbox", name: "category_checkbox" },
-                domProps: {
-                  checked: Array.isArray(
-                    _vm.category_ckbox_statuses[index].status
-                  )
-                    ? _vm._i(_vm.category_ckbox_statuses[index].status, null) >
-                      -1
-                    : _vm.category_ckbox_statuses[index].status,
-                },
-                on: {
-                  click: function ($event) {
-                    return _vm.click_category_btn(category.id)
-                  },
-                  change: function ($event) {
-                    var $$a = _vm.category_ckbox_statuses[index].status,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(
-                            _vm.category_ckbox_statuses[index],
-                            "status",
-                            $$a.concat([$$v])
-                          )
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.category_ckbox_statuses[index],
-                            "status",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(
-                        _vm.category_ckbox_statuses[index],
-                        "status",
-                        $$c
-                      )
-                    }
-                  },
-                },
-              }),
-            ]),
-          ])
-        }),
-      ],
-      2
+      },
+      [_vm._v("クイズ")]
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      [
-        _c("h3", [_vm._v("中機能")]),
-        _vm._v(" "),
-        _vm._l(_vm.sub_categories, function (sub_category, index) {
-          return _c("div", { key: sub_category.id }, [
-            _c("label", [
-              _vm._v("\n                " + _vm._s(sub_category.sub_category)),
-              _c("input", {
+    _vm.is_visible_quiz
+      ? _c("div", [
+          _c("div", [
+            _c("div", { attrs: { id: "word" } }, [
+              _c("h2", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.word) +
+                    "\n                "
+                ),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
                 directives: [
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sub_category_ckbox_statuses[index].status,
-                    expression: "sub_category_ckbox_statuses[index].status",
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.is_visible_text,
+                    expression: "is_visible_text",
                   },
                 ],
-                attrs: { type: "checkbox", name: "sub_category_checkbox" },
-                domProps: {
-                  checked: Array.isArray(
-                    _vm.sub_category_ckbox_statuses[index].status
-                  )
-                    ? _vm._i(
-                        _vm.sub_category_ckbox_statuses[index].status,
-                        null
-                      ) > -1
-                    : _vm.sub_category_ckbox_statuses[index].status,
-                },
-                on: {
-                  click: function ($event) {
-                    return _vm.click_sub_category_btn(sub_category.id)
-                  },
-                  change: function ($event) {
-                    var $$a = _vm.sub_category_ckbox_statuses[index].status,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(
-                            _vm.sub_category_ckbox_statuses[index],
-                            "status",
-                            $$a.concat([$$v])
-                          )
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.sub_category_ckbox_statuses[index],
-                            "status",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(
-                        _vm.sub_category_ckbox_statuses[index],
-                        "status",
-                        $$c
-                      )
-                    }
+                attrs: { id: "text" },
+              },
+              [
+                _vm._v(
+                  "\n                " + _vm._s(_vm.text) + "\n            "
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: {
+                    click: function ($event) {
+                      return _vm.ask()
+                    },
                   },
                 },
-              }),
+                [_vm._v("\n                    出題\n                ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: {
+                    click: function ($event) {
+                      return _vm.see_text()
+                    },
+                  },
+                },
+                [_vm._v("\n                    解説\n                ")]
+              ),
             ]),
-          ])
-        }),
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("button", { attrs: { onclick: "location.href='/'" } }, [
-      _vm._v("単語リストへ"),
-    ]),
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c("h3", [_vm._v("大機能")]),
+              _vm._v(" "),
+              _vm._l(_vm.categories, function (category, index) {
+                return _c("div", { key: category.id }, [
+                  _c("label", [
+                    _vm._v(
+                      "\n                    " + _vm._s(category.category)
+                    ),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.category_ckbox_statuses[index].status,
+                          expression: "category_ckbox_statuses[index].status",
+                        },
+                      ],
+                      attrs: { type: "checkbox", name: "category_checkbox" },
+                      domProps: {
+                        checked: Array.isArray(
+                          _vm.category_ckbox_statuses[index].status
+                        )
+                          ? _vm._i(
+                              _vm.category_ckbox_statuses[index].status,
+                              null
+                            ) > -1
+                          : _vm.category_ckbox_statuses[index].status,
+                      },
+                      on: {
+                        click: function ($event) {
+                          return _vm.click_category_btn(category.id)
+                        },
+                        change: function ($event) {
+                          var $$a = _vm.category_ckbox_statuses[index].status,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.category_ckbox_statuses[index],
+                                  "status",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.category_ckbox_statuses[index],
+                                  "status",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(
+                              _vm.category_ckbox_statuses[index],
+                              "status",
+                              $$c
+                            )
+                          }
+                        },
+                      },
+                    }),
+                  ]),
+                ])
+              }),
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c("h3", [_vm._v("中機能")]),
+              _vm._v(" "),
+              _vm._l(_vm.sub_categories, function (sub_category, index) {
+                return _c("div", { key: sub_category.id }, [
+                  _c("label", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(sub_category.sub_category)
+                    ),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.sub_category_ckbox_statuses[index].status,
+                          expression:
+                            "sub_category_ckbox_statuses[index].status",
+                        },
+                      ],
+                      attrs: {
+                        type: "checkbox",
+                        name: "sub_category_checkbox",
+                      },
+                      domProps: {
+                        checked: Array.isArray(
+                          _vm.sub_category_ckbox_statuses[index].status
+                        )
+                          ? _vm._i(
+                              _vm.sub_category_ckbox_statuses[index].status,
+                              null
+                            ) > -1
+                          : _vm.sub_category_ckbox_statuses[index].status,
+                      },
+                      on: {
+                        click: function ($event) {
+                          return _vm.click_sub_category_btn(sub_category.id)
+                        },
+                        change: function ($event) {
+                          var $$a =
+                              _vm.sub_category_ckbox_statuses[index].status,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.sub_category_ckbox_statuses[index],
+                                  "status",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.sub_category_ckbox_statuses[index],
+                                  "status",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(
+                              _vm.sub_category_ckbox_statuses[index],
+                              "status",
+                              $$c
+                            )
+                          }
+                        },
+                      },
+                    }),
+                  ]),
+                ])
+              }),
+            ],
+            2
+          ),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WordTableComponent.vue?vue&type=template&id=0eb0e7a4&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WordTableComponent.vue?vue&type=template&id=0eb0e7a4& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "table",
+      { staticClass: "table table-bordered" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.words, function (word) {
+          return _c("tr", { key: word.id, attrs: { value: word.id } }, [
+            _c("td", [
+              _vm._v(
+                "\n                " + _vm._s(word.id) + "\n                "
+              ),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { onclick: _vm.edit_href(word.id) },
+                },
+                [_vm._v("編集")]
+              ),
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(word.word))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(word.text))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(_vm._s(_vm.find_category(word.category_id).category)),
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(_vm.find_sub_category(word.sub_category_id).sub_category)
+              ),
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(word.question_count))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(word.mistake_count))]),
+          ])
+        }),
+      ],
+      2
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("id")]),
+      _c("th", [_vm._v("単語")]),
+      _c("th", [_vm._v("意味")]),
+      _c("th", [_vm._v("大分類")]),
+      _c("th", [_vm._v("中分類")]),
+      _c("th", [_vm._v("出題回数")]),
+      _c("th", [_vm._v("分からなかった回数")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -40161,6 +40773,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

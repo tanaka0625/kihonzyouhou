@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Word;
 use App\Models\Category;
+use App\Models\SubCategory;
 
 class ListController extends Controller
 {
@@ -13,10 +14,12 @@ class ListController extends Controller
         // 単語を全て取得
         $words = Word::all();
         $categories = Category::all();
+        $sub_categories = SubCategory::all();
 
         $data = [
             'words' => $words,
             'categories' => $categories,
+            'sub_categories' => $sub_categories,
             'count' => count($words)
         ];
     
@@ -30,11 +33,11 @@ class ListController extends Controller
         $new_word = new Word;
         $new_word->word = $request->word;
         $new_word->text = $request->text;
-        $new_word->category = $request->category;
-        $new_word->sub_category = $request->sub_category;
+        $new_word->category_id = $request->category_id;
+        $new_word->sub_category_id = $request->sub_category_id;
         $new_word->save();
 
-        return redirect('/list');
+        return redirect('/');
     }
 
 

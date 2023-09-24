@@ -24,6 +24,5 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "@vue/cli": "^5.0.8"
     }
 }
