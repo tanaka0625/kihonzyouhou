@@ -1,49 +1,51 @@
 <template>
     <div>
+        <button class="btn btn-dark" v-on:click="show_quiz()">クイズ</button>
+        <div v-if="is_visible_quiz">
 
-        <div>
-            <div id="word">
-                <h2>
-                    {{ word }}
-                </h2>
-            </div>
-
-            <div id="text" v-show="is_visible_text">
-                {{ text }}
-            </div>
             <div>
-                <button class="btn btn-primary" v-on:click="ask()">
-                    出題
-                </button>
-                <button class="btn btn-primary" v-on:click="see_text()">
-                    解説
-                </button>
+                <div id="word">
+                    <h2>
+                        {{ word }}
+                    </h2>
+                </div>
+
+                <div id="text" v-show="is_visible_text">
+                    {{ text }}
+                </div>
+                <div>
+                    <button class="btn btn-primary" v-on:click="ask()">
+                        出題
+                    </button>
+                    <button class="btn btn-primary" v-on:click="see_text()">
+                        解説
+                    </button>
+                </div>
             </div>
-        </div>
 
 
-        <div>
-            <h3>大機能</h3>
-            <div v-for="(category, index) in categories" :key="category.id">
-                <label>
-                    {{ category.category }}<input type="checkbox" name="category_checkbox" v-model="category_ckbox_statuses[index].status" v-on:click="click_category_btn(category.id)">
-                </label>
+            <div>
+                <h3>大機能</h3>
+                <div v-for="(category, index) in categories" :key="category.id">
+                    <label>
+                        {{ category.category }}<input type="checkbox" name="category_checkbox" v-model="category_ckbox_statuses[index].status" v-on:click="click_category_btn(category.id)">
+                    </label>
+                </div>
             </div>
-        </div>
-    
+        
 
-        <div>
-            <h3>中機能</h3>
-            <div v-for="(sub_category, index) in sub_categories" :key="sub_category.id">
-                <label>
-                    {{ sub_category.sub_category }}<input type="checkbox" name="sub_category_checkbox" v-model="sub_category_ckbox_statuses[index].status" v-on:click="click_sub_category_btn(sub_category.id)">
-                </label>
+            <div>
+                <h3>中機能</h3>
+                <div v-for="(sub_category, index) in sub_categories" :key="sub_category.id">
+                    <label>
+                        {{ sub_category.sub_category }}<input type="checkbox" name="sub_category_checkbox" v-model="sub_category_ckbox_statuses[index].status" v-on:click="click_sub_category_btn(sub_category.id)">
+                    </label>
+                </div>
             </div>
+
         </div>
-
-        <button onclick="location.href='/'">単語リストへ</button>
-
     </div>
+
 
 </template>
 
@@ -79,7 +81,8 @@
                 // word: this.ask()
                 word: "単語",
                 text: "解説",
-                is_visible_text: true
+                is_visible_text: true,
+                is_visible_quiz: false
             };
         },
         methods: {
@@ -213,6 +216,13 @@
             },
             see_text: function () {
                 this.is_visible_text = true;
+            },
+            show_quiz: function () {
+                if(this.is_visible_quiz){
+                    this.is_visible_quiz = false;
+                }else{
+                    this.is_visible_quiz = true;
+                }
             }
         }
     }

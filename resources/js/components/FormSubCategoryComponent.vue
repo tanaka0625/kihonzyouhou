@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>
+        <button class="btn btn-dark" v-on:click="show_form_sub_category()">中項目追加</button>
+        <div v-if="is_visible_form_sub_category">
             <form action="/post/sub_category" method="post">
                 <div>
                     <select name="category_id">
@@ -27,13 +28,18 @@
         },
         data() {
             return {
-                test: true,
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                is_visible_form_sub_category: false
             };
         },
         methods: {
-            test() {
-                return true;
+            show_form_sub_category: function() {
+                if(this.is_visible_form_sub_category)
+                {
+                    this.is_visible_form_sub_category = false;
+                }else{
+                    this.is_visible_form_sub_category = true;
+                }
             }
         }
     }
