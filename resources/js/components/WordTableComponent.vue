@@ -67,9 +67,13 @@
                 
             },
             show_edit_form: function (id){
-                this.id = id;
+                if(this.id === id)
+                {
+                    this.id = 0;
+                }else{
+                    this.id = id;
+                }
             }
-            
         }
     }
 </script>
