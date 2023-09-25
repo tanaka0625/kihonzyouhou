@@ -5681,7 +5681,11 @@ __webpack_require__.r(__webpack_exports__);
       return url;
     },
     show_edit_form: function show_edit_form(id) {
-      this.id = id;
+      if (this.id === id) {
+        this.id = 0;
+      } else {
+        this.id = id;
+      }
     }
   }
 });
