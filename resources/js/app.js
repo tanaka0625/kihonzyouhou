@@ -25,6 +25,7 @@ Vue.component('form-category-component', require('./components/FormCategoryCompo
 Vue.component('form-sub-category-component', require('./components/FormSubCategoryComponent.vue').default);
 Vue.component('form-word-component', require('./components/FormWordComponent.vue').default);
 Vue.component('word-table-component', require('./components/WordTableComponent.vue').default);
+Vue.component('form-edit-word-component', require('./components/EditWordComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

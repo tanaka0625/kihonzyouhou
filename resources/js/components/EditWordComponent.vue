@@ -1,12 +1,13 @@
 <template>
-        <div>
-            <button class="btn btn-dark" v-on:click="show_form_word()">単語追加</button>
-            <div v-if="is_visible_form_word">
-                <form action="/post/word" method="post">
-                    <label for="text">単語</label>
-                    <input type="text" name="word" id="form_word"><br>
+    <div>
+        <div v-if="show_form()">
+            <h2>単語編集</h2>
+            <div>
+                <form :action=url method="post">
+                    <label for="form_word">単語</label>
+                    <input type="text" name="word" id="form_word" :value="word.word"><br>
                     <label for="form_text">解説</label>
-                    <textarea name="text" id="form_text" cols="30" rows="10"></textarea><br>
+                    <textarea name="text" id="form_text" cols="30" rows="10" v-model="word.text"></textarea><br>
                     <div>
                         <label for="form_category">大分類</label>
                         <select name="category_id" id="form_category" v-model="selected_category">
@@ -23,12 +24,11 @@
                     <input type="hidden" name="_token" :value="csrf">
                 </form>
             </div>
-
         </div>
+    </div>
 </template>
 
 <script>
-
 export default {
     props: {
         categories: {
@@ -37,29 +37,37 @@ export default {
         },
         sub_categories: {
             type: Array,
+            required: true
+        },
+        word: {
+            type: Object,
             requires: true
         },
-        item: {
-            type: Array
+        edit_form_word_id: {
+            type: Number,
+            required: true
         }
 
     },
     data() {
         return {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            is_visible_form_word: false,
-            selected_category: 0,
-            selected_sub_category: 0,
+            url: "edit/" + this.word.id,
+            selected_category: this.word.category_id,
+            selected_sub_category: this.word.sub_category_id,
         };
     },
     methods: {
-        show_form_word: function () {
-            if(this.is_visible_form_word === false)
-            {
-                this.is_visible_form_word = true;
-            }else{
-                this.is_visible_form_word = false;
-            }
+        show_form: function() {
+            return this.edit_form_word_id === this.word.id;
+        },
+        find_category: function (category_id){
+            let result = this.categories.find((category) => category.id == category_id);
+            return result;
+        },
+        find_sub_category: function (sub_category_id){
+            let result = this.sub_categories.find((sub_category) => sub_category.id == sub_category_id);
+            return result;                
         },
         find_sub_category_options: function (){
             let ary = {};
@@ -74,5 +82,4 @@ export default {
         }
     }
 }
-
 </script>
