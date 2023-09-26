@@ -5453,6 +5453,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -5479,7 +5483,9 @@ __webpack_require__.r(__webpack_exports__);
       // word: this.ask()
       word: "単語",
       text: "解説",
-      is_visible_text: true,
+      category: "",
+      sub_category: "",
+      is_visible_text: false,
       is_visible_quiz: false
     };
   },
@@ -5581,6 +5587,13 @@ __webpack_require__.r(__webpack_exports__);
       var randnum = Math.floor(Math.random() * cnt);
       console.log(array[randnum]);
       this.word = array[randnum].word;
+      this.text = array[randnum].text;
+      this.category = this.categories.find(function (category) {
+        return category.id === array[randnum].category_id;
+      });
+      this.sub_category = this.sub_categories.find(function (sub_category) {
+        return sub_category.id === array[randnum].sub_category_id;
+      });
       this.text = array[randnum].text;
       this.is_visible_text = false;
     },
@@ -28755,6 +28768,19 @@ var render = function () {
     _vm.is_visible_quiz
       ? _c("div", [
           _c("div", [
+            _c("div", [
+              _vm.is_visible_text
+                ? _c("h5", [
+                    _vm._v(
+                      "大機能:" +
+                        _vm._s(_vm.category.category) +
+                        "  中機能:" +
+                        _vm._s(_vm.sub_category.sub_category)
+                    ),
+                  ])
+                : _vm._e(),
+            ]),
+            _vm._v(" "),
             _c("div", { attrs: { id: "word" } }, [
               _c("h2", [
                 _vm._v(
@@ -28765,25 +28791,13 @@ var render = function () {
               ]),
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.is_visible_text,
-                    expression: "is_visible_text",
-                  },
-                ],
-                attrs: { id: "text" },
-              },
-              [
-                _vm._v(
-                  "\n                " + _vm._s(_vm.text) + "\n            "
-                ),
-              ]
-            ),
+            _vm.is_visible_text
+              ? _c("div", { attrs: { id: "text" } }, [
+                  _vm._v(
+                    "\n                " + _vm._s(_vm.text) + "\n            "
+                  ),
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", [
               _c(

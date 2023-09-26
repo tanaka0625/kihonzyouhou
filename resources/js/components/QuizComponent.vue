@@ -4,13 +4,17 @@
         <div v-if="is_visible_quiz">
 
             <div>
+                <div>
+                    <h5 v-if="is_visible_text">大機能:{{ category.category }}  中機能:{{ sub_category.sub_category }}</h5>
+                </div>
+
                 <div id="word">
                     <h2>
                         {{ word }}
                     </h2>
                 </div>
 
-                <div id="text" v-show="is_visible_text">
+                <div id="text" v-if="is_visible_text">
                     {{ text }}
                 </div>
                 <div>
@@ -81,7 +85,9 @@
                 // word: this.ask()
                 word: "単語",
                 text: "解説",
-                is_visible_text: true,
+                category: "",
+                sub_category: "",
+                is_visible_text: false,
                 is_visible_quiz: false
             };
         },
@@ -211,6 +217,9 @@
                 let randnum = Math.floor( Math.random() * cnt);
                 console.log(array[randnum]);
                 this.word = array[randnum].word;
+                this.text = array[randnum].text;
+                this.category = this.categories.find((category) => category.id === array[randnum].category_id);
+                this.sub_category = this.sub_categories.find((sub_category) => sub_category.id === array[randnum].sub_category_id);
                 this.text = array[randnum].text;
                 this.is_visible_text = false;
             },
