@@ -30,9 +30,9 @@
 
             <div>
                 <h3>大機能</h3>
-                <div v-for="(category, index) in categories" :key="category.id">
+                <div v-for="category in categories" :key="category.id">
                     <label>
-                        {{ category.category }}<input type="checkbox" name="category_checkbox" v-model="category_ckbox_statuses[index].status" v-on:click="click_category_btn(category.id)">
+                        {{ category.category }}<input type="checkbox" name="category_checkbox" :value="category.id" v-model="selected_category_ids" v-on:click="test()">
                     </label>
                 </div>
             </div>
@@ -40,9 +40,9 @@
 
             <div>
                 <h3>中機能</h3>
-                <div v-for="(sub_category, index) in sub_categories" :key="sub_category.id">
+                <div v-for="sub_category in sub_categories" :key="sub_category.id">
                     <label>
-                        {{ sub_category.sub_category }}<input type="checkbox" name="sub_category_checkbox" v-model="sub_category_ckbox_statuses[index].status" v-on:click="click_sub_category_btn(sub_category.id)">
+                        {{ sub_category.sub_category }}<input type="checkbox" name="sub_category_checkbox" :value="sub_category.id" v-model="selected_sub_category_ids" v-on:click="test()">
                     </label>
                 </div>
             </div>
@@ -80,142 +80,104 @@
         },
         data() {
             return {
-                sub_category_ckbox_statuses: this.get_sub_category_ckbox_statuses(),
-                category_ckbox_statuses: this.get_category_ckbox_statuses(),
                 // word: this.ask()
                 word: "単語",
                 text: "解説",
                 category: "",
                 sub_category: "",
                 is_visible_text: false,
-                is_visible_quiz: false
+                is_visible_quiz: false,
+                selected_category_ids: [],
+                selected_sub_category_ids: []
             };
         },
+        created: function() {
+            let array = [];
+            this.categories.forEach(function(category){
+                array.push(category.id);
+            });
+            this.selected_category_ids = array;
+
+            let array2 = [];
+            this.sub_categories.forEach(function(sub_category){
+                array2.push(sub_category.id);
+            });
+            this.selected_sub_category_ids = array2;
+        },
+        watch: {
+            selected_category_ids: function(newVal, oldVal) {
+                
+ 
+            },
+            selected_sub_category_ids: function(newVal, oldVal) {
+                
+                let array=[];
+                for(let i=0; i<newVal.length; i++){
+                   
+                    let result;
+                    result = this.sub_categories.find(function(sub_category){
+                        return newVal[i] === sub_category.id;
+                    });
+                    console.log(result);
+                    array[i] = result.category_id;
+                };
+                let array2 = Array.from(new Set(array));
+                this.selected_category_ids = array2;
+            },
+
+        },
+
+        // computed: {
+        //     selected_sub_category_ids: {
+        //         get: function () {
+        //             let array2 = [];
+        //             this.sub_categories.forEach(function(sub_category){
+        //             array2.push(sub_category.id);
+        //             });
+        //             return array2;
+        //         },
+        //         set: function (a) {
+        //             console.log(this.selected_sub_category_ids);
+        //             console.log(a);
+
+        //             // this.selected_sub_category_ids = a;
+        //             return a;
+        //         }
+              
+        //     },
+        //     selected_category_ids: function() {
+        //         let array1 = [];
+        //         this.categories.forEach(function(category){
+        //             array1.push(category.id);
+        //         });
+        //         return array1;
+        //     },
+
+        // },
+
         methods: {
-            click_sub_category_btn: function (id) {
-                for(let i=0; i<this.sub_categories.length; i++)
-                {
-                    if(this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === false)
-                    {
-                        this.sub_category_ckbox_statuses[i].status = true;
-                        console.log(this.sub_category_ckbox_statuses);
-                        for(let x=0; x<this.categories.length; x++)
-                        {
-                            console.log(this.categories[x].id);
-                            console.log(this.sub_categories[i].category_id);
-                            console.log(this.category_ckbox_statuses[x].status);
-                            if(this.categories[x].id === this.sub_categories[i].category_id && this.category_ckbox_statuses[x].status === false)
-                            {
-                                this.category_ckbox_statuses[x].status = true;
-                                // console.log(this.categories[x].status);
-                                console.log(1);
-                            }else if(this.categories[x].id === this.sub_categories[i].category_id && this.category_ckbox_statuses[x].status === true)
-                            {
-                                console.log(2);
 
-                                break;
-                            }else{
-                                // console.log(3);
-                            }
-                        }
-                        break;
-
-                    }else if(this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === true)
-                    {
-                        this.sub_category_ckbox_statuses[i].status = false;
-                        console.log(this.sub_category_ckbox_statuses);
-                        break;
-
-                    };
-                };
-            },
-            click_category_btn: function (id) {
-                for(let i=0; i<this.categories.length; i++)
-                {
-                    if(this.categories[i].id === id && this.category_ckbox_statuses[i].status === false)
-                    {
-                        this.category_ckbox_statuses[i].status = true;
-                        console.log(this.category_ckbox_statuses);
-                        for(let x=0; x<this.sub_categories.length; x++)
-                        {
-                            if(this.category_ckbox_statuses[i].id === this.sub_category_ckbox_statuses[x].category_id)
-                            {
-                                this.sub_category_ckbox_statuses[x].status = true;
-                            }
-                        }
-                        break;
-
-                    }else if(this.categories[i].id === id && this.category_ckbox_statuses[i].status === true)
-                    {
-                        this.category_ckbox_statuses[i].status = false;
-                        console.log(this.category_ckbox_statuses);
-                        for(let x=0; x<this.sub_categories.length; x++)
-                        {
-
-                            if(this.category_ckbox_statuses[i].id === this.sub_category_ckbox_statuses[x].category_id)
-                            {
-
-                                // console.log(this.category_ckbox_statuses[i].id);
-                                // console.log(this.sub_category_ckbox_statuses[x].category_id);
-
-                                this.sub_category_ckbox_statuses[x].status = false;
-                            }
-                        }
-                        break;
-
-                    };
-                };
-            },
-            get_sub_category_ckbox_statuses: function () {
-                let array = {};
-                for(let i=0; i<this.sub_categories.length; i++)
-                {
-                    array[i] = {
-                        id: this.sub_categories[i].id,
-                        category_id: this.sub_categories[i].category_id,
-                        status: true
-                    };
-                }
-                    
-                return array;
-            },
-            get_category_ckbox_statuses: function () {
-                let array = {};
-                for(let i=0; i<this.categories.length; i++)
-                {
-                    array[i] = {
-                        id: this.categories[i].id,
-                        status: true
-                    };
-                }
-                    
-                return array;
+            // update_sub_category_ckbox_statuses: function () {
+            //     console.log(this.selected_sub_category_ids);
+            // },
+            test: function () {
+                // console.log(this.selected_category_ids);
+                // console.log(this.selected_sub_category_ids);
+                console.log(1);
             },
             ask: function () {
-                console.log(1);
-                let cnt=0;
+                // console.log(1);
+                // console.log(this.selected_sub_category_ids);
                 let array = {};
  
-                for(let i=0; i<Object.keys(this.sub_category_ckbox_statuses).length; i++)
-                {
-                    console.log(2);
-                    if(this.sub_category_ckbox_statuses[i].status === true)
-                    {
-                        for(let x=0; x<this.words.length; x++)
-                        {
-                            if(this.sub_category_ckbox_statuses[i].id === this.words[x].sub_category_id)
-                            {
-                                
-                                array[cnt] = this.words[x];
-                                cnt++;
-                            }
-                        }
-                        
-                    }
-                }
+                array = this.words.filter(function(word){
+                    if(this.includes(word.sub_category_id)) return word;
+                },this.selected_sub_category_ids);
+                // console.log(2);
+                // console.log(this.selected_sub_category_ids);
 
-                let randnum = Math.floor( Math.random() * cnt);
-                console.log(array[randnum]);
+                let randnum = Math.floor( Math.random() * array.length);
+                // console.log(array);
                 this.word = array[randnum].word;
                 this.text = array[randnum].text;
                 this.category = this.categories.find((category) => category.id === array[randnum].category_id);
