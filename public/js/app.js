@@ -5478,7 +5478,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      // word: this.ask()
       word: "単語",
       text: "解説",
       category: "",
@@ -5486,7 +5485,9 @@ __webpack_require__.r(__webpack_exports__);
       is_visible_text: false,
       is_visible_quiz: false,
       selected_category_ids: [],
-      selected_sub_category_ids: []
+      selected_sub_category_ids: [],
+      category_ckbox_status: false,
+      sub_category_ckbox_status: false
     };
   },
   created: function created() {
@@ -5502,75 +5503,94 @@ __webpack_require__.r(__webpack_exports__);
     this.selected_sub_category_ids = array2;
   },
   watch: {
-    selected_category_ids: function selected_category_ids(newVal, oldVal) {},
+    selected_category_ids: function selected_category_ids(newVal, oldVal) {
+      if (this.category_ckbox_status) {
+        // 無限ループ対策　selected_sub_category_idsが動かないように
+        this.sub_category_ckbox_status = false;
+        if (newVal.length < oldVal.length) {
+          // 大機能のチェックを外した場合
+
+          // 差分抽出
+          var difference = [];
+          difference = oldVal.filter(function (category_id) {
+            return newVal.indexOf(category_id) == -1;
+          });
+
+          // 差分に紐づく中機能を取得
+          var deleted_sub_categories;
+          deleted_sub_categories = this.sub_categories.filter(function (sub_category) {
+            return sub_category.category_id === difference[0];
+          });
+          var deleted_sub_category_ids = deleted_sub_categories.map(function (value) {
+            return value["id"];
+          });
+
+          // 差分に紐づく中機能をselected_sub_category_idsから削除
+          var new_sub_category_ids;
+          new_sub_category_ids = this.selected_sub_category_ids.filter(function (sub_category_id) {
+            return deleted_sub_category_ids.indexOf(sub_category_id) == -1;
+          }, deleted_sub_category_ids);
+          this.selected_sub_category_ids = new_sub_category_ids;
+          // console.log(this.selected_sub_category_ids);
+          // console.log(new_sub_category_ids);
+          console.log(deleted_sub_category_ids);
+        } else {
+          // 大機能にチェックを追加した場合
+
+          // 差分抽出
+          var _difference = [];
+          _difference = newVal.filter(function (category_id) {
+            return oldVal.indexOf(category_id) == -1;
+          });
+
+          // 差分に紐づく中機能を取得
+          var added_sub_categories;
+          added_sub_categories = this.sub_categories.filter(function (sub_category) {
+            return sub_category.category_id === _difference[0];
+          });
+
+          // 差分に紐づく中機能をselected_sub_category_idsに追加
+          for (var i = 0; i < added_sub_categories.length; i++) {
+            this.selected_sub_category_ids.push(added_sub_categories[i].id);
+          }
+          var array = Array.from(new Set(this.selected_sub_category_ids));
+          this.selected_sub_category_ids = array;
+        }
+      } else {
+        this.category_ckbox_status = true;
+      }
+    },
     selected_sub_category_ids: function selected_sub_category_ids(newVal, oldVal) {
       var _this = this;
-      var array = [];
-      var _loop = function _loop(i) {
-        var result;
-        result = _this.sub_categories.find(function (sub_category) {
-          return newVal[i] === sub_category.id;
-        });
-        console.log(result);
-        array[i] = result.category_id;
-      };
-      for (var i = 0; i < newVal.length; i++) {
-        _loop(i);
+      if (this.sub_category_ckbox_status) {
+        // 無限ループ対策　selected_sub_category_idsが動かないように
+        this.category_ckbox_status = false;
+        var array = [];
+        var _loop = function _loop(i) {
+          var result;
+          result = _this.sub_categories.find(function (sub_category) {
+            return newVal[i] === sub_category.id;
+          });
+          array[i] = result.category_id;
+        };
+        for (var i = 0; i < newVal.length; i++) {
+          _loop(i);
+        }
+        ;
+        var array2 = Array.from(new Set(array));
+        this.selected_category_ids = array2;
+      } else {
+        this.sub_category_ckbox_status = true;
       }
-      ;
-      var array2 = Array.from(new Set(array));
-      this.selected_category_ids = array2;
     }
   },
-  // computed: {
-  //     selected_sub_category_ids: {
-  //         get: function () {
-  //             let array2 = [];
-  //             this.sub_categories.forEach(function(sub_category){
-  //             array2.push(sub_category.id);
-  //             });
-  //             return array2;
-  //         },
-  //         set: function (a) {
-  //             console.log(this.selected_sub_category_ids);
-  //             console.log(a);
-
-  //             // this.selected_sub_category_ids = a;
-  //             return a;
-  //         }
-
-  //     },
-  //     selected_category_ids: function() {
-  //         let array1 = [];
-  //         this.categories.forEach(function(category){
-  //             array1.push(category.id);
-  //         });
-  //         return array1;
-  //     },
-
-  // },
-
   methods: {
-    // update_sub_category_ckbox_statuses: function () {
-    //     console.log(this.selected_sub_category_ids);
-    // },
-    test: function test() {
-      // console.log(this.selected_category_ids);
-      // console.log(this.selected_sub_category_ids);
-      console.log(1);
-    },
     ask: function ask() {
-      // console.log(1);
-      // console.log(this.selected_sub_category_ids);
       var array = {};
       array = this.words.filter(function (word) {
         if (this.includes(word.sub_category_id)) return word;
       }, this.selected_sub_category_ids);
-      // console.log(2);
-      // console.log(this.selected_sub_category_ids);
-
       var randnum = Math.floor(Math.random() * array.length);
-      // console.log(array);
       this.word = array[randnum].word;
       this.text = array[randnum].text;
       this.category = this.categories.find(function (category) {
@@ -28841,9 +28861,6 @@ var render = function () {
                           : _vm.selected_category_ids,
                       },
                       on: {
-                        click: function ($event) {
-                          return _vm.test()
-                        },
                         change: function ($event) {
                           var $$a = _vm.selected_category_ids,
                             $$el = $event.target,
@@ -28908,9 +28925,6 @@ var render = function () {
                           : _vm.selected_sub_category_ids,
                       },
                       on: {
-                        click: function ($event) {
-                          return _vm.test()
-                        },
                         change: function ($event) {
                           var $$a = _vm.selected_sub_category_ids,
                             $$el = $event.target,
