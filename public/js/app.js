@@ -5478,114 +5478,119 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      sub_category_ckbox_statuses: this.get_sub_category_ckbox_statuses(),
-      category_ckbox_statuses: this.get_category_ckbox_statuses(),
-      // word: this.ask()
       word: "単語",
       text: "解説",
       category: "",
       sub_category: "",
       is_visible_text: false,
-      is_visible_quiz: false
+      is_visible_quiz: false,
+      selected_category_ids: [],
+      selected_sub_category_ids: [],
+      category_ckbox_status: false,
+      sub_category_ckbox_status: false
     };
   },
-  methods: {
-    click_sub_category_btn: function click_sub_category_btn(id) {
-      for (var i = 0; i < this.sub_categories.length; i++) {
-        if (this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === false) {
-          this.sub_category_ckbox_statuses[i].status = true;
-          console.log(this.sub_category_ckbox_statuses);
-          for (var x = 0; x < this.categories.length; x++) {
-            console.log(this.categories[x].id);
-            console.log(this.sub_categories[i].category_id);
-            console.log(this.category_ckbox_statuses[x].status);
-            if (this.categories[x].id === this.sub_categories[i].category_id && this.category_ckbox_statuses[x].status === false) {
-              this.category_ckbox_statuses[x].status = true;
-              // console.log(this.categories[x].status);
-              console.log(1);
-            } else if (this.categories[x].id === this.sub_categories[i].category_id && this.category_ckbox_statuses[x].status === true) {
-              console.log(2);
-              break;
-            } else {
-              // console.log(3);
-            }
-          }
-          break;
-        } else if (this.sub_categories[i].id === id && this.sub_category_ckbox_statuses[i].status === true) {
-          this.sub_category_ckbox_statuses[i].status = false;
-          console.log(this.sub_category_ckbox_statuses);
-          break;
-        }
-        ;
-      }
-      ;
-    },
-    click_category_btn: function click_category_btn(id) {
-      for (var i = 0; i < this.categories.length; i++) {
-        if (this.categories[i].id === id && this.category_ckbox_statuses[i].status === false) {
-          this.category_ckbox_statuses[i].status = true;
-          console.log(this.category_ckbox_statuses);
-          for (var x = 0; x < this.sub_categories.length; x++) {
-            if (this.category_ckbox_statuses[i].id === this.sub_category_ckbox_statuses[x].category_id) {
-              this.sub_category_ckbox_statuses[x].status = true;
-            }
-          }
-          break;
-        } else if (this.categories[i].id === id && this.category_ckbox_statuses[i].status === true) {
-          this.category_ckbox_statuses[i].status = false;
-          console.log(this.category_ckbox_statuses);
-          for (var _x = 0; _x < this.sub_categories.length; _x++) {
-            if (this.category_ckbox_statuses[i].id === this.sub_category_ckbox_statuses[_x].category_id) {
-              // console.log(this.category_ckbox_statuses[i].id);
-              // console.log(this.sub_category_ckbox_statuses[x].category_id);
+  created: function created() {
+    var array = [];
+    this.categories.forEach(function (category) {
+      array.push(category.id);
+    });
+    this.selected_category_ids = array;
+    var array2 = [];
+    this.sub_categories.forEach(function (sub_category) {
+      array2.push(sub_category.id);
+    });
+    this.selected_sub_category_ids = array2;
+  },
+  watch: {
+    selected_category_ids: function selected_category_ids(newVal, oldVal) {
+      if (this.category_ckbox_status) {
+        // 無限ループ対策　selected_sub_category_idsが動かないように
+        this.sub_category_ckbox_status = false;
+        if (newVal.length < oldVal.length) {
+          // 大機能のチェックを外した場合
 
-              this.sub_category_ckbox_statuses[_x].status = false;
-            }
+          // 差分抽出
+          var difference = [];
+          difference = oldVal.filter(function (category_id) {
+            return newVal.indexOf(category_id) == -1;
+          });
+
+          // 差分に紐づく中機能を取得
+          var deleted_sub_categories;
+          deleted_sub_categories = this.sub_categories.filter(function (sub_category) {
+            return sub_category.category_id === difference[0];
+          });
+          var deleted_sub_category_ids = deleted_sub_categories.map(function (value) {
+            return value["id"];
+          });
+
+          // 差分に紐づく中機能をselected_sub_category_idsから削除
+          var new_sub_category_ids;
+          new_sub_category_ids = this.selected_sub_category_ids.filter(function (sub_category_id) {
+            return deleted_sub_category_ids.indexOf(sub_category_id) == -1;
+          }, deleted_sub_category_ids);
+          this.selected_sub_category_ids = new_sub_category_ids;
+          // console.log(this.selected_sub_category_ids);
+          // console.log(new_sub_category_ids);
+          console.log(deleted_sub_category_ids);
+        } else {
+          // 大機能にチェックを追加した場合
+
+          // 差分抽出
+          var _difference = [];
+          _difference = newVal.filter(function (category_id) {
+            return oldVal.indexOf(category_id) == -1;
+          });
+
+          // 差分に紐づく中機能を取得
+          var added_sub_categories;
+          added_sub_categories = this.sub_categories.filter(function (sub_category) {
+            return sub_category.category_id === _difference[0];
+          });
+
+          // 差分に紐づく中機能をselected_sub_category_idsに追加
+          for (var i = 0; i < added_sub_categories.length; i++) {
+            this.selected_sub_category_ids.push(added_sub_categories[i].id);
           }
-          break;
+          var array = Array.from(new Set(this.selected_sub_category_ids));
+          this.selected_sub_category_ids = array;
+        }
+      } else {
+        this.category_ckbox_status = true;
+      }
+    },
+    selected_sub_category_ids: function selected_sub_category_ids(newVal, oldVal) {
+      var _this = this;
+      if (this.sub_category_ckbox_status) {
+        // 無限ループ対策　selected_sub_category_idsが動かないように
+        this.category_ckbox_status = false;
+        var array = [];
+        var _loop = function _loop(i) {
+          var result;
+          result = _this.sub_categories.find(function (sub_category) {
+            return newVal[i] === sub_category.id;
+          });
+          array[i] = result.category_id;
+        };
+        for (var i = 0; i < newVal.length; i++) {
+          _loop(i);
         }
         ;
+        var array2 = Array.from(new Set(array));
+        this.selected_category_ids = array2;
+      } else {
+        this.sub_category_ckbox_status = true;
       }
-      ;
-    },
-    get_sub_category_ckbox_statuses: function get_sub_category_ckbox_statuses() {
-      var array = {};
-      for (var i = 0; i < this.sub_categories.length; i++) {
-        array[i] = {
-          id: this.sub_categories[i].id,
-          category_id: this.sub_categories[i].category_id,
-          status: true
-        };
-      }
-      return array;
-    },
-    get_category_ckbox_statuses: function get_category_ckbox_statuses() {
-      var array = {};
-      for (var i = 0; i < this.categories.length; i++) {
-        array[i] = {
-          id: this.categories[i].id,
-          status: true
-        };
-      }
-      return array;
-    },
+    }
+  },
+  methods: {
     ask: function ask() {
-      console.log(1);
-      var cnt = 0;
       var array = {};
-      for (var i = 0; i < Object.keys(this.sub_category_ckbox_statuses).length; i++) {
-        console.log(2);
-        if (this.sub_category_ckbox_statuses[i].status === true) {
-          for (var x = 0; x < this.words.length; x++) {
-            if (this.sub_category_ckbox_statuses[i].id === this.words[x].sub_category_id) {
-              array[cnt] = this.words[x];
-              cnt++;
-            }
-          }
-        }
-      }
-      var randnum = Math.floor(Math.random() * cnt);
-      console.log(array[randnum]);
+      array = this.words.filter(function (word) {
+        if (this.includes(word.sub_category_id)) return word;
+      }, this.selected_sub_category_ids);
+      var randnum = Math.floor(Math.random() * array.length);
       this.word = array[randnum].word;
       this.text = array[randnum].text;
       this.category = this.categories.find(function (category) {
@@ -28833,7 +28838,7 @@ var render = function () {
             [
               _c("h3", [_vm._v("大機能")]),
               _vm._v(" "),
-              _vm._l(_vm.categories, function (category, index) {
+              _vm._l(_vm.categories, function (category) {
                 return _c("div", { key: category.id }, [
                   _c("label", [
                     _vm._v(
@@ -28844,53 +28849,36 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.category_ckbox_statuses[index].status,
-                          expression: "category_ckbox_statuses[index].status",
+                          value: _vm.selected_category_ids,
+                          expression: "selected_category_ids",
                         },
                       ],
                       attrs: { type: "checkbox", name: "category_checkbox" },
                       domProps: {
-                        checked: Array.isArray(
-                          _vm.category_ckbox_statuses[index].status
-                        )
-                          ? _vm._i(
-                              _vm.category_ckbox_statuses[index].status,
-                              null
-                            ) > -1
-                          : _vm.category_ckbox_statuses[index].status,
+                        value: category.id,
+                        checked: Array.isArray(_vm.selected_category_ids)
+                          ? _vm._i(_vm.selected_category_ids, category.id) > -1
+                          : _vm.selected_category_ids,
                       },
                       on: {
-                        click: function ($event) {
-                          return _vm.click_category_btn(category.id)
-                        },
                         change: function ($event) {
-                          var $$a = _vm.category_ckbox_statuses[index].status,
+                          var $$a = _vm.selected_category_ids,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
-                            var $$v = null,
+                            var $$v = category.id,
                               $$i = _vm._i($$a, $$v)
                             if ($$el.checked) {
                               $$i < 0 &&
-                                _vm.$set(
-                                  _vm.category_ckbox_statuses[index],
-                                  "status",
-                                  $$a.concat([$$v])
-                                )
+                                (_vm.selected_category_ids = $$a.concat([$$v]))
                             } else {
                               $$i > -1 &&
-                                _vm.$set(
-                                  _vm.category_ckbox_statuses[index],
-                                  "status",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
+                                (_vm.selected_category_ids = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
                             }
                           } else {
-                            _vm.$set(
-                              _vm.category_ckbox_statuses[index],
-                              "status",
-                              $$c
-                            )
+                            _vm.selected_category_ids = $$c
                           }
                         },
                       },
@@ -28907,7 +28895,7 @@ var render = function () {
             [
               _c("h3", [_vm._v("中機能")]),
               _vm._v(" "),
-              _vm._l(_vm.sub_categories, function (sub_category, index) {
+              _vm._l(_vm.sub_categories, function (sub_category) {
                 return _c("div", { key: sub_category.id }, [
                   _c("label", [
                     _vm._v(
@@ -28919,9 +28907,8 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.sub_category_ckbox_statuses[index].status,
-                          expression:
-                            "sub_category_ckbox_statuses[index].status",
+                          value: _vm.selected_sub_category_ids,
+                          expression: "selected_sub_category_ids",
                         },
                       ],
                       attrs: {
@@ -28929,48 +28916,35 @@ var render = function () {
                         name: "sub_category_checkbox",
                       },
                       domProps: {
-                        checked: Array.isArray(
-                          _vm.sub_category_ckbox_statuses[index].status
-                        )
+                        value: sub_category.id,
+                        checked: Array.isArray(_vm.selected_sub_category_ids)
                           ? _vm._i(
-                              _vm.sub_category_ckbox_statuses[index].status,
-                              null
+                              _vm.selected_sub_category_ids,
+                              sub_category.id
                             ) > -1
-                          : _vm.sub_category_ckbox_statuses[index].status,
+                          : _vm.selected_sub_category_ids,
                       },
                       on: {
-                        click: function ($event) {
-                          return _vm.click_sub_category_btn(sub_category.id)
-                        },
                         change: function ($event) {
-                          var $$a =
-                              _vm.sub_category_ckbox_statuses[index].status,
+                          var $$a = _vm.selected_sub_category_ids,
                             $$el = $event.target,
                             $$c = $$el.checked ? true : false
                           if (Array.isArray($$a)) {
-                            var $$v = null,
+                            var $$v = sub_category.id,
                               $$i = _vm._i($$a, $$v)
                             if ($$el.checked) {
                               $$i < 0 &&
-                                _vm.$set(
-                                  _vm.sub_category_ckbox_statuses[index],
-                                  "status",
-                                  $$a.concat([$$v])
-                                )
+                                (_vm.selected_sub_category_ids = $$a.concat([
+                                  $$v,
+                                ]))
                             } else {
                               $$i > -1 &&
-                                _vm.$set(
-                                  _vm.sub_category_ckbox_statuses[index],
-                                  "status",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
+                                (_vm.selected_sub_category_ids = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
                             }
                           } else {
-                            _vm.$set(
-                              _vm.sub_category_ckbox_statuses[index],
-                              "status",
-                              $$c
-                            )
+                            _vm.selected_sub_category_ids = $$c
                           }
                         },
                       },
