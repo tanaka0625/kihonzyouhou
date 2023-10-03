@@ -28,7 +28,7 @@
                 <tr v-for="word in selected_words" :key="word.id" :value="word.id">
                     <td>
                         {{word.id}}
-                        <button class="btn btn-primary" type="button" v-on:click="show_edit_form(word.id)">編集</button>
+                        <button class="btn btn-primary edit-btn" type="button" v-on:click="show_edit_form(word.id)">編集</button>
                         <form-edit-word-component :word="word" :category="find_category(word.category_id)" :sub_category="find_sub_category(word.sub_category_id)" :edit_form_word_id="id" :categories="categories" :sub_categories="sub_categories"></form-edit-word-component>
                     </td>
                     <td>{{word.word}}</td>
@@ -45,10 +45,6 @@
     </div>
 
 </template>
-    <div>
-
-    </div>
-
 
 <script>
     export default {
@@ -228,3 +224,11 @@
         }
     }
 </script>
+
+<style scoped>
+/* bootstrapのtableを編集しています */
+.edit-btn {
+  color: #fff;
+
+}
+</style>
