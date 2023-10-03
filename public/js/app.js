@@ -5655,6 +5655,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -5675,8 +5700,120 @@ __webpack_require__.r(__webpack_exports__);
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       is_visible_form: false,
-      id: 0
+      id: 0,
+      selected_category_ids: [],
+      selected_sub_category_ids: [],
+      category_ckbox_status: false,
+      sub_category_ckbox_status: false,
+      is_visible_filter: false,
+      selected_words: []
     };
+  },
+  created: function created() {
+    var array = [];
+    this.categories.forEach(function (category) {
+      array.push(category.id);
+    });
+    this.selected_category_ids = array;
+    var array2 = [];
+    this.sub_categories.forEach(function (sub_category) {
+      array2.push(sub_category.id);
+    });
+    this.selected_sub_category_ids = array2;
+
+    // 表示する単語に受け取った全単語を選択
+    this.selected_words = this.words;
+  },
+  watch: {
+    selected_category_ids: function selected_category_ids(newVal, oldVal) {
+      if (this.category_ckbox_status) {
+        // 無限ループ対策　selected_sub_category_idsが動かないように
+        this.sub_category_ckbox_status = false;
+        if (newVal.length < oldVal.length) {
+          // 大機能のチェックを外した場合
+
+          // 差分抽出
+          var difference = [];
+          difference = oldVal.filter(function (category_id) {
+            return newVal.indexOf(category_id) == -1;
+          });
+
+          // 差分に紐づく中機能を取得
+          var deleted_sub_categories;
+          deleted_sub_categories = this.sub_categories.filter(function (sub_category) {
+            return sub_category.category_id === difference[0];
+          });
+          var deleted_sub_category_ids = deleted_sub_categories.map(function (value) {
+            return value["id"];
+          });
+
+          // 差分に紐づく中機能をselected_sub_category_idsから削除
+          var new_sub_category_ids;
+          new_sub_category_ids = this.selected_sub_category_ids.filter(function (sub_category_id) {
+            return deleted_sub_category_ids.indexOf(sub_category_id) == -1;
+          }, deleted_sub_category_ids);
+          this.selected_sub_category_ids = new_sub_category_ids;
+          // console.log(this.selected_sub_category_ids);
+          // console.log(new_sub_category_ids);
+          // console.log(deleted_sub_category_ids);
+
+          // フィルターが掛かった単語をセット
+          this.set_words();
+        } else {
+          // 大機能にチェックを追加した場合
+
+          // 差分抽出
+          var _difference = [];
+          _difference = newVal.filter(function (category_id) {
+            return oldVal.indexOf(category_id) == -1;
+          });
+
+          // 差分に紐づく中機能を取得
+          var added_sub_categories;
+          added_sub_categories = this.sub_categories.filter(function (sub_category) {
+            return sub_category.category_id === _difference[0];
+          });
+
+          // 差分に紐づく中機能をselected_sub_category_idsに追加
+          for (var i = 0; i < added_sub_categories.length; i++) {
+            this.selected_sub_category_ids.push(added_sub_categories[i].id);
+          }
+          var array = Array.from(new Set(this.selected_sub_category_ids));
+          this.selected_sub_category_ids = array;
+
+          // フィルターが掛かった単語をセット
+          this.set_words();
+        }
+      } else {
+        this.category_ckbox_status = true;
+      }
+    },
+    selected_sub_category_ids: function selected_sub_category_ids(newVal, oldVal) {
+      var _this = this;
+      if (this.sub_category_ckbox_status) {
+        // 無限ループ対策　selected_sub_category_idsが動かないように
+        this.category_ckbox_status = false;
+        var array = [];
+        var _loop = function _loop(i) {
+          var result;
+          result = _this.sub_categories.find(function (sub_category) {
+            return newVal[i] === sub_category.id;
+          });
+          array[i] = result.category_id;
+        };
+        for (var i = 0; i < newVal.length; i++) {
+          _loop(i);
+        }
+        ;
+        var array2 = Array.from(new Set(array));
+        this.selected_category_ids = array2;
+
+        // フィルターが掛かった単語をセット
+        this.set_words();
+      } else {
+        this.sub_category_ckbox_status = true;
+      }
+    }
   },
   methods: {
     find_category: function find_category(category_id) {
@@ -5704,6 +5841,21 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.id = id;
       }
+    },
+    show_filter: function show_filter() {
+      if (this.is_visible_filter) {
+        this.is_visible_filter = false;
+      } else {
+        this.is_visible_filter = true;
+      }
+    },
+    set_words: function set_words() {
+      var _this2 = this;
+      var new_words = [];
+      new_words = this.words.filter(function (word) {
+        return _this2.selected_sub_category_ids.indexOf(word.sub_category_id) != -1;
+      });
+      this.selected_words = new_words;
     }
   }
 });
@@ -28983,13 +29135,158 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-dark",
+          on: {
+            click: function ($event) {
+              return _vm.show_filter()
+            },
+          },
+        },
+        [_vm._v("フィルター")]
+      ),
+      _vm._v(" "),
+      _vm.is_visible_filter
+        ? _c("div", [
+            _c(
+              "div",
+              [
+                _c("h3", [_vm._v("大機能")]),
+                _vm._v(" "),
+                _vm._l(_vm.categories, function (category) {
+                  return _c("div", { key: category.id }, [
+                    _c("label", [
+                      _vm._v(
+                        "\n                        " + _vm._s(category.category)
+                      ),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected_category_ids,
+                            expression: "selected_category_ids",
+                          },
+                        ],
+                        attrs: { type: "checkbox", name: "category_checkbox" },
+                        domProps: {
+                          value: category.id,
+                          checked: Array.isArray(_vm.selected_category_ids)
+                            ? _vm._i(_vm.selected_category_ids, category.id) >
+                              -1
+                            : _vm.selected_category_ids,
+                        },
+                        on: {
+                          change: function ($event) {
+                            var $$a = _vm.selected_category_ids,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = category.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.selected_category_ids = $$a.concat([
+                                    $$v,
+                                  ]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.selected_category_ids = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.selected_category_ids = $$c
+                            }
+                          },
+                        },
+                      }),
+                    ]),
+                  ])
+                }),
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("h3", [_vm._v("中機能")]),
+                _vm._v(" "),
+                _vm._l(_vm.sub_categories, function (sub_category) {
+                  return _c("div", { key: sub_category.id }, [
+                    _c("label", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(sub_category.sub_category)
+                      ),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected_sub_category_ids,
+                            expression: "selected_sub_category_ids",
+                          },
+                        ],
+                        attrs: {
+                          type: "checkbox",
+                          name: "sub_category_checkbox",
+                        },
+                        domProps: {
+                          value: sub_category.id,
+                          checked: Array.isArray(_vm.selected_sub_category_ids)
+                            ? _vm._i(
+                                _vm.selected_sub_category_ids,
+                                sub_category.id
+                              ) > -1
+                            : _vm.selected_sub_category_ids,
+                        },
+                        on: {
+                          change: function ($event) {
+                            var $$a = _vm.selected_sub_category_ids,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = sub_category.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.selected_sub_category_ids = $$a.concat([
+                                    $$v,
+                                  ]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.selected_sub_category_ids = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.selected_sub_category_ids = $$c
+                            }
+                          },
+                        },
+                      }),
+                    ]),
+                  ])
+                }),
+              ],
+              2
+            ),
+          ])
+        : _vm._e(),
+    ]),
+    _vm._v(" "),
     _c(
       "table",
       { staticClass: "table table-bordered" },
       [
         _vm._m(0),
         _vm._v(" "),
-        _vm._l(_vm.words, function (word) {
+        _vm._l(_vm.selected_words, function (word) {
           return _c("tr", { key: word.id, attrs: { value: word.id } }, [
             _c(
               "td",
