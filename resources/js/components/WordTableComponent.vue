@@ -92,6 +92,11 @@
             this.selected_words = this.words;
         },
         watch: {
+            words: function(newVal) {
+                // 親のwordsの更新を検知
+                this.words = newVal;
+                this.set_words();
+            },
             selected_category_ids: function(newVal, oldVal) {
                 if(this.category_ckbox_status){
 
