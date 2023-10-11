@@ -24,4 +24,19 @@ class QuizController extends Controller
 
         return view('quiz.index', $data);
     }
+
+    public function ask(Request $request) {
+        $word = Word::find($request->word_id);
+        $word->question_count = $word->question_count + 1;
+        $word->save();
+
+        $words = Word::all();
+
+        $data = [
+            'words' => $words
+        ];
+
+
+        return response()->json($data);
+    }
 }

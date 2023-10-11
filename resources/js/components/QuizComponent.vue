@@ -106,6 +106,9 @@
             this.selected_sub_category_ids = array2;
         },
         watch: {
+            words: function(newVal) {
+                this.words = newVal;
+            },
             selected_category_ids: function(newVal, oldVal) {
                 if(this.category_ckbox_status){
 
@@ -192,6 +195,7 @@
         methods: {
 
             ask: function () {
+                // 出題
                 let array = {};
  
                 array = this.words.filter(function(word){
@@ -205,6 +209,9 @@
                 this.sub_category = this.sub_categories.find((sub_category) => sub_category.id === array[randnum].sub_category_id);
                 this.text = array[randnum].text;
                 this.is_visible_text = false;
+
+                // 出題された回数をカウントアップ
+                this.$emit("ask", array[randnum].id);
             },
             see_text: function () {
                 this.is_visible_text = true;

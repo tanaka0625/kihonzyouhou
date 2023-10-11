@@ -26,4 +26,5 @@ Route::post('/post/category', [App\Http\Controllers\PostCategoryController::clas
 Route::post('/post/sub_category', [App\Http\Controllers\PostSubCategoryController::class, 'index']);
 Route::get('/edit/{word_id}', [App\Http\Controllers\EditController::class, 'index']);
 Route::post('/edit/{word_id}', [App\Http\Controllers\EditController::class, 'edit']);
+Route::post('/quiz/ask', [App\Http\Controllers\QuizController::class, 'ask']);
 
