@@ -1,0 +1,135 @@
+Sub sample()
+    'ppt関連
+    Dim ppApp As New PowerPoint.Application
+    Dim ppPt As Presentation
+    Dim ppSlide As Slide
+    Dim ppSlideNum As Integer
+    Dim ppShape As PowerPoint.Shape
+    Dim pptName As String
+    Dim ppShapeTop As Integer
+    Dim ppShapeLeft As Integer
+    
+    
+    
+    'コピペボット君Excel関連
+    Dim thisWb As Workbook
+    Dim thisWs As Worksheet
+    Set thisWb = ThisWorkbook
+    Set thisWs = thisWb.Sheets("コピペボット君")
+    
+    '材料になるExcel関連
+    Dim xlsxName As String
+    Dim pathToXlsx As String
+    Dim sheetName As String
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim wasContinuous As String
+    Dim isContinuous As String
+    Dim position As String
+    
+    'コピー関連
+    Dim copyRangeHidariue As String
+    Dim copyRangeMigishita As String
+    Dim copyRange As String
+    Dim kotei As String
+    Dim koteiCho As Integer
+            
+            
+    'パワポを開く
+    pptName = Cells(3, 11)
+    'ppApp.Visible = True 'PowerPoint2007以前の場合は有効にしてください。
+    Set ppPt = ppApp.Presentations.Open(ThisWorkbook.Path & "\" & pptName)
+    
+    'Excelを上から一行ずつブルドーザー
+    Dim i
+    For i = 3 To Cells(1, 1).End(xlDown).Row
+        'ひたすら変数定義
+        xlsxName = thisWs.Cells(i, 1)
+        pathToXlsx = ThisWorkbook.Path & "\材料\" & xlsxName
+        sheetName = thisWs.Cells(i, 2)
+        copyRangeHidariue = thisWs.Cells(i, 3)
+        copyRangeMigishita = thisWs.Cells(i, 4)
+        copyRange = copyRangeHidariue & ":" & copyRangeMigishita
+        ppSlideNum = thisWs.Cells(i, 5)
+        kotei = thisWs.Cells(i, 6)
+        koteiCho = thisWs.Cells(i, 7)
+        position = thisWs.Cells(i, 8)
+        wasContinuous = thisWs.Cells(i - 1, 9)
+        isContinuous = thisWs.Cells(i, 9)
+        
+         
+        '前と違うファイルを開く場合
+        If wasContinuous <> "続く" Then
+          If Dir(pathToXlsx) <> "" Then
+              Set wb = Workbooks.Open(pathToXlsx)
+          Else
+              MsgBox "ファイルが存在しません。", vbExclamation
+          End If
+        End If
+        
+        Set ws = wb.Worksheets(sheetName)
+        
+        With ws
+            .Range(copyRange).Copy
+            DoEvents
+            
+            'スライド番号を指定
+            Set ppSlide = ppPt.Slides(ppSlideNum)
+            ppSlide.Shapes.PasteSpecial DataType:=ppPasteEnhancedMetafile, Link:=msoFalse
+            Set ppShape = ppSlide.Shapes(ppSlide.Shapes.Count)
+            
+            If position = "左上" Then
+                '上位置
+                ppShape.Top = Application.CentimetersToPoints(1)
+                '左位置
+                ppShape.Left = Application.CentimetersToPoints(1)
+            ElseIf position = "右上" Then
+                '上位置
+                ppShape.Top = Application.CentimetersToPoints(1)
+                '左位置
+                ppShape.Left = Application.CentimetersToPoints(11)
+            ElseIf position = "左下" Then
+                '上位置
+                ppShape.Top = Application.CentimetersToPoints(9)
+                '左位置
+                ppShape.Left = Application.CentimetersToPoints(1)
+            ElseIf position = "右下" Then
+                '上位置
+                ppShape.Top = Application.CentimetersToPoints(9)
+                '左位置
+                ppShape.Left = Application.CentimetersToPoints(11)
+            End If
+            
+            
+                
+                
+                
+            '縦横比を固定
+            ppShape.LockAspectRatio = msoTrue
+            
+            If kotei = "高さ" Then
+                '横幅
+                ppShape.Height = Application.CentimetersToPoints(koteiCho)
+            ElseIf kotei = "幅" Then
+                '横幅
+                ppShape.Width = Application.CentimetersToPoints(koteiCho)
+            End If
+            Application.CutCopyMode = False
+        End With
+        
+        '次のファイルが違うファイルなら閉じる
+        If isContinuous <> "続く" Then
+          wb.Save
+          wb.Close
+          Set wb = Nothing
+          Set ws = Nothing
+        End If
+    Next
+    MsgBox ("パワポをご確認の上セーブしてください。")
+    
+    '保存やウィンドウクローズをする場合ここを有効化
+    'ppPt.Save
+    'ppApp.Quit
+    Set ppPt = Nothing
+    Set ppApp = Nothing
+End Sub
