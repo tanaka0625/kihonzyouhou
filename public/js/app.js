@@ -28990,7 +28990,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mt-1" }, [
     _c(
       "button",
       {
@@ -29050,7 +29050,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mt-1" }, [
     _c(
       "button",
       {
@@ -29135,7 +29135,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mt-1" }, [
     _c(
       "button",
       {
@@ -29299,6 +29299,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "mt-1" },
     [
       _c("quiz-component", {
         attrs: {
@@ -29356,7 +29357,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mt-1" }, [
     _c(
       "button",
       {
@@ -29582,7 +29583,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mt-1" }, [
     _c("div", [
       _c(
         "button",
@@ -29730,7 +29731,7 @@ var render = function () {
     _vm._v(" "),
     _c(
       "table",
-      { staticClass: "table table-bordered" },
+      { staticClass: "table table-bordered mt-1" },
       [
         _vm._m(0),
         _vm._v(" "),

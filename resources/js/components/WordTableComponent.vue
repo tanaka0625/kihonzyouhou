@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <div>
             <button class="btn btn-dark" v-on:click="show_filter()">フィルター</button>
             <div v-if="is_visible_filter">
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-1">
                 <tr><th>id</th><th>単語</th><th>意味</th><th>大分類</th><th>中分類</th><th>出題回数</th><th>分からなかった回数</th></tr>
                 <tr v-for="word in selected_words" :key="word.id" :value="word.id">
                     <td>

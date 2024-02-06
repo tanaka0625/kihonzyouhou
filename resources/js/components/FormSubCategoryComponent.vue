@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <button class="btn btn-dark" v-on:click="show_form_sub_category()">中項目追加</button>
         <div v-if="is_visible_form_sub_category">
             <form action="/post/sub_category" method="post">
