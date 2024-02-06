@@ -231,9 +231,8 @@
 </script>
 
 <style scoped>
-/* bootstrapのtableを編集しています */
-.edit-btn {
-  color: #fff;
-
-}
+/* btn-primaryを指定するとbackground-colorが白くなってため個別で指定 */
+    .btn-primary {
+        background-color: aqua;
+    }
 </style>
