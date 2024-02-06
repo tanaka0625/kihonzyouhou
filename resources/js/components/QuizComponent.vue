@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <button class="btn btn-dark" v-on:click="show_quiz()">クイズ</button>
         <div v-if="is_visible_quiz">
 

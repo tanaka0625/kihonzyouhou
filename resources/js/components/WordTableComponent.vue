@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <div>
             <button class="btn btn-dark" v-on:click="show_filter()">フィルター</button>
             <div v-if="is_visible_filter">
@@ -23,8 +23,8 @@
             </div>
         </div>
 
-        <table class="table table-bordered">
-                <tr><th>id</th><th>単語</th><th>意味</th><th>大分類</th><th>中分類</th><th>出題回数</th><th>分からなかった回数</th></tr>
+        <table class="table table-bordered mt-1">
+                <tr><th>id</th><th>単語</th><th>意味</th><th>大分類</th><th>中分類</th><th>出題回数</th></tr>
                 <tr v-for="word in selected_words" :key="word.id" :value="word.id">
                     <td>
                         {{word.id}}
@@ -36,7 +36,6 @@
                     <td>{{find_category(word.category_id).category}}</td>
                     <td>{{find_sub_category(word.sub_category_id).sub_category}}</td>
                     <td>{{word.question_count}}</td>
-                    <td>{{word.mistake_count}}</td>
                 </tr> 
         </table>
 
@@ -231,9 +230,8 @@
 </script>
 
 <style scoped>
-/* bootstrapのtableを編集しています */
-.edit-btn {
-  color: #fff;
-
-}
+/* btn-primaryを指定するとbackground-colorが白くなってため個別で指定 */
+    .btn-primary {
+        background-color: aqua;
+    }
 </style>

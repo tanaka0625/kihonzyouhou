@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <quiz-component :categories="categories" :sub_categories="sub_categories" :words="variable_words" @ask="countup_question_count"></quiz-component>
         <form-word-component :categories="categories" :sub_categories="sub_categories"></form-word-component>
         <form-category-component></form-category-component>
